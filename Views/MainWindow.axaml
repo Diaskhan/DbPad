@@ -1,4 +1,4 @@
-<Window xmlns="https://github.com/avaloniaui"
+﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:models="clr-namespace:DbPad.Models"
         x:Class="DbPad.Views.MainWindow"
@@ -56,15 +56,19 @@
 					<TabControl ItemsSource="{Binding Tabs}">
 						<TabControl.ItemTemplate>
 							<DataTemplate>
-								<TextBlock Text="{Binding Text1, FallbackValue=Tab}" />
+								<TextBlock Text="{Binding TabCaption, FallbackValue=Tab}" />
 							</DataTemplate>
 						</TabControl.ItemTemplate>
 						<TabControl.ContentTemplate>
-							<DataTemplate>
-								<StackPanel>
-									<TextBox Text="text1" Watermark="Text 1"/>
-									<TextBox Text="text2" Watermark="Text 2"/>
-								</StackPanel>
+							<DataTemplate x:DataType="vm:TabItemModel">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition Height="300"/>
+										<RowDefinition Height="300"/>
+									</Grid.RowDefinitions>
+									<TextBox Grid.Row="0" Text="{Binding Text1, Mode=TwoWay}" Watermark="Text 1"/>
+									<TextBox Grid.Row="1" Text="{Binding Text2, Mode=TwoWay}" Watermark="Text 2"/>
+								</Grid>
 							</DataTemplate>
 						</TabControl.ContentTemplate>
 					</TabControl>
