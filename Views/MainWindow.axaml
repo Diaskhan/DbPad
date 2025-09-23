@@ -1,0 +1,32 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="DbPad.Views.MainWindow"
+        Width="800" Height="600"
+        Title="DbPad">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- TreeView on the left -->
+        <TreeView Grid.Column="0" Margin="8"/>
+
+        <!-- Right side: vertical split for input and output -->
+        <Grid Grid.Column="1" Margin="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="300"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Text input field (top right) -->
+            <TextBox Grid.Row="0" Watermark="Enter text..." Margin="0,0,0,8"/>
+
+            <!-- Output results field (bottom right) -->
+            <TextBox Grid.Row="1" IsReadOnly="True" AcceptsReturn="True"/>
+        </Grid>
+    </Grid>
+</Window>
