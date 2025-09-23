@@ -1,11 +1,14 @@
 ﻿using DbPad.Models;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace DbPad.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
         public ObservableCollection<Node> Nodes { get; }
+        public ObservableCollection<TabItemModel> Tabs { get; }
+        public ICommand AddTabCommand { get; }
 
         public MainWindowViewModel()
         {
@@ -19,6 +22,14 @@ namespace DbPad.ViewModels
                     })
                 })
             };
+
+            Tabs = new ObservableCollection<TabItemModel>();
+            AddTabCommand = new RelayCommand(AddTab);
+        }
+
+        private void AddTab()
+        {
+            Tabs.Add(new TabItemModel());
         }
     }
 }

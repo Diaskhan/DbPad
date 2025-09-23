@@ -7,55 +7,70 @@
         xmlns:vm="using:DbPad.ViewModels"
         x:DataType="vm:MainWindowViewModel"
 		>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> <!-- Toolbar row -->
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<!-- Toolbar row -->
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="250"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
 
-        <!-- New panel with buttons below toolbar -->
-        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,16,0">
-            <Button Content="Run" Margin="2,0"/>
-            <Button Content="Export" Margin="2,0"/>
-            <Button Content="Settings" Margin="2,0"/>
-        </StackPanel>
+		<!-- New panel with buttons below toolbar -->
+		<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,16,0">
+			<Button Content="Run" Margin="2,0"/>
+			<Button Content="Export" Margin="2,0"/>
+			<Button Content="Settings" Margin="2,0"/>
+		</StackPanel>
 
-        <!-- Main content below toolbar -->
-        <Grid Grid.Row="1" Grid.ColumnSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+		<!-- Main content below toolbar -->
+		<Grid Grid.Row="1" Grid.ColumnSpan="2">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="250"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
 
-            <!-- TreeView on the left -->
-            <TreeView Grid.Column="0" Margin="8" ItemsSource="{Binding Nodes}">
-                <TreeView.ItemTemplate>
-                    <TreeDataTemplate ItemsSource="{Binding SubNodes}">
-                        <TextBlock Text="{Binding Title}"/>
-                    </TreeDataTemplate>
-                </TreeView.ItemTemplate>
-            </TreeView>
+			<!-- TreeView on the left -->
+			<TreeView Grid.Column="0" Margin="8" ItemsSource="{Binding Nodes}">
+				<TreeView.ItemTemplate>
+					<TreeDataTemplate ItemsSource="{Binding SubNodes}">
+						<TextBlock Text="{Binding Title}"/>
+					</TreeDataTemplate>
+				</TreeView.ItemTemplate>
+			</TreeView>
 
-            <!-- Right side: vertical split for input and output -->
-            <Grid Grid.Column="1" Margin="8">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="300"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+			<!-- Right side: vertical split for input and output -->
+			<Grid Grid.Column="1" Margin="8">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="300"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
 
-                <!-- Text input field (top right) -->
-                <TextBox Grid.Row="0" Watermark="Enter text..." Margin="0,0,0,8"/>
+				<StackPanel>
+					<Button Content="Add Tab" Command="{Binding AddTabCommand}" Margin="0,0,0,8"/>
+					<TabControl ItemsSource="{Binding Tabs}">
+						<TabControl.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding Text1, FallbackValue=Tab}" />
+							</DataTemplate>
+						</TabControl.ItemTemplate>
+						<TabControl.ContentTemplate>
+							<DataTemplate>
+								<StackPanel>
+									<TextBox Text="text1" Watermark="Text 1"/>
+									<TextBox Text="text2" Watermark="Text 2"/>
+								</StackPanel>
+							</DataTemplate>
+						</TabControl.ContentTemplate>
+					</TabControl>
+				</StackPanel>
+			</Grid>
+		</Grid>
+	</Grid>
 
-                <!-- Output results field (bottom right) -->
-                <TextBox Grid.Row="1" IsReadOnly="True" AcceptsReturn="True"/>
-            </Grid>
-        </Grid>
-    </Grid>
 </Window>
