@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using DbPad.ViewModels;
 
 namespace DbPad.Views
 {
@@ -7,6 +8,7 @@ namespace DbPad.Views
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainWindowViewModel();
         }
     }
 }
