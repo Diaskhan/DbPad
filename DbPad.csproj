@@ -13,6 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AvaloniaResource Remove="Assets\Icons\database.svg" />
+    <AvaloniaResource Remove="Assets\Icons\table.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.3.6" />
     <PackageReference Include="Avalonia.Desktop" Version="11.3.6" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.6" />
@@ -25,5 +30,10 @@
     <PackageReference Include="Avalonia.Themes.Simple" Version="11.3.6" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.1" />
     <PackageReference Include="ReactiveUI" Version="20.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Icons\database.svg" />
+    <Resource Include="Assets\Icons\table.svg" />
   </ItemGroup>
 </Project>

@@ -32,7 +32,10 @@
 			<TreeView Grid.Row="1" ItemsSource="{Binding Nodes}">
 				<TreeView.ItemTemplate>
 					<TreeDataTemplate ItemsSource="{Binding SubNodes}">
-						<TextBlock Text="{Binding Title}"/>
+						<StackPanel Orientation="Horizontal" Spacing="4">
+							<Image Source="{Binding Glyph}" Width="16" Height="16"/>
+							<TextBlock Text="{Binding Title}"/>
+						</StackPanel>
 					</TreeDataTemplate>
 				</TreeView.ItemTemplate>
 			</TreeView>
