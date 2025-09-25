@@ -7,74 +7,69 @@
         xmlns:vm="using:DbPad.ViewModels"
         x:DataType="vm:MainWindowViewModel"
 		>
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-			<!-- Toolbar row -->
-			<RowDefinition Height="*"/>
-		</Grid.RowDefinitions>
+	<!-- Main content below toolbar -->
+	<Grid Grid.Row="1" Grid.ColumnSpan="2">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="250"/>
+			<ColumnDefinition Width="300"/>
 			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
 
-		<!-- New panel with buttons below toolbar -->
-		<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,16,0">
-			<Button Content="Run" Margin="2,0"/>
-			<Button Content="Export" Margin="2,0"/>
-			<Button Content="Settings" Margin="2,0"/>
-		</StackPanel>
 
-		<!-- Main content below toolbar -->
-		<Grid Grid.Row="1" Grid.ColumnSpan="2">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="250"/>
-				<ColumnDefinition Width="*"/>
-			</Grid.ColumnDefinitions>
+		<!-- left side -->
+		<Grid Grid.Row="1" Grid.Column="0" Margin="8">
 			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
-
-			<!-- TreeView on the left -->
-			<TreeView Grid.Column="0" Margin="8" ItemsSource="{Binding Nodes}">
+			<StackPanel Height="50" Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,0">
+				<Button Content="+ Connection" Margin="1,0,0,0"/>
+				<Button Content="- Connection" Margin="1,0,0,0"/>
+				<Button Content="Edit Connection" Margin="1,0,0,0"/>
+			</StackPanel>
+			<TreeView Grid.Row="1" ItemsSource="{Binding Nodes}">
 				<TreeView.ItemTemplate>
 					<TreeDataTemplate ItemsSource="{Binding SubNodes}">
 						<TextBlock Text="{Binding Title}"/>
 					</TreeDataTemplate>
 				</TreeView.ItemTemplate>
 			</TreeView>
+		</Grid>
 
-			<!-- Right side: vertical split for input and output -->
-			<Grid Grid.Column="1" Margin="8">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="300"/>
-					<RowDefinition Height="*"/>
-				</Grid.RowDefinitions>
 
-				<StackPanel>
-					<Button Content="Add Tab" Command="{Binding AddTabCommand}" Margin="0,0,0,8"/>
-					<TabControl ItemsSource="{Binding Tabs}">
-						<TabControl.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding TabCaption, FallbackValue=Tab}" />
-							</DataTemplate>
-						</TabControl.ItemTemplate>
-						<TabControl.ContentTemplate>
-							<DataTemplate x:DataType="vm:TabItemModel">
-								<Grid>
-									<Grid.RowDefinitions>
-										<RowDefinition Height="300"/>
-										<RowDefinition Height="300"/>
-									</Grid.RowDefinitions>
-									<TextBox Grid.Row="0" Text="{Binding Text1, Mode=TwoWay}" Watermark="Text 1"/>
-									<TextBox Grid.Row="1" Text="{Binding Text2, Mode=TwoWay}" Watermark="Text 2"/>
-								</Grid>
-							</DataTemplate>
-						</TabControl.ContentTemplate>
-					</TabControl>
-				</StackPanel>
-			</Grid>
+		<!-- Right side: vertical split for input and output -->
+		<Grid Grid.Column="1" Margin="8">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="300"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+
+			<StackPanel>
+				<Button Content="Add Tab" Command="{Binding AddTabCommand}" Margin="0,0,0,8"/>
+				<TabControl ItemsSource="{Binding Tabs}">
+					<TabControl.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding TabCaption, FallbackValue=Tab}" />
+						</DataTemplate>
+					</TabControl.ItemTemplate>
+					<TabControl.ContentTemplate>
+						<DataTemplate x:DataType="vm:TabItemModel">
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="300"/>
+									<RowDefinition Height="300"/>
+								</Grid.RowDefinitions>
+								<TextBox Grid.Row="0" Text="{Binding Text1, Mode=TwoWay}" Watermark="Text 1"/>
+								<TextBox Grid.Row="1" Text="{Binding Text2, Mode=TwoWay}" Watermark="Text 2"/>
+							</Grid>
+						</DataTemplate>
+					</TabControl.ContentTemplate>
+				</TabControl>
+			</StackPanel>
 		</Grid>
 	</Grid>
+
 
 </Window>
