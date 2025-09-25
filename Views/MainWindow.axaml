@@ -25,7 +25,7 @@
 				<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
 			<StackPanel Height="50" Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,0">
-				<Button Content="+ Connection" Margin="1,0,0,0"/>
+				<Button Content="+ Connection" Margin="1,0,0,0" Command="{Binding AddConnectionCommand}"/>
 				<Button Content="- Connection" Margin="1,0,0,0"/>
 				<Button Content="Edit Connection" Margin="1,0,0,0"/>
 			</StackPanel>
