@@ -35,11 +35,11 @@
 						<TextBlock Text="{Binding Title}">
 							<TextBlock.ContextMenu>
 								<ContextMenu DataContext="{Binding $parent[TreeView].DataContext}">
-									<MenuItem Header="Action1Command"
-											  Command="{Binding Action1Command}"
+									<MenuItem Header="Select * 1000"
+											  Command="{Binding Select1000Command}"
 											  CommandParameter="{Binding}" />
-									<MenuItem Header="Action2Command"
-											  Command="{Binding Action2Command}"
+									<MenuItem Header="Edit Table"
+											  Command="{Binding EditDataCommand}"
 											  CommandParameter="{Binding}" />
 								</ContextMenu>
 							</TextBlock.ContextMenu>

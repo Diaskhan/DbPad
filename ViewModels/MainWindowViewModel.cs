@@ -14,9 +14,9 @@ namespace DbPad.ViewModels
         public ObservableCollection<TabItemModel> Tabs { get; }
         public ICommand AddTabCommand { get; }
         public RelayCommand AddConnectionCommand { get; }
-        public ICommand Action1Command { get; }
-        public ICommand Action2Command { get; }
-        public ICommand Action3Command { get; }
+        public ICommand Select1000Command { get; }
+        public ICommand EditDataCommand { get; }
+        public ICommand DesignTableCommand { get; }
 
         public MainWindowViewModel()
         {
@@ -32,9 +32,9 @@ namespace DbPad.ViewModels
             Tabs = new ObservableCollection<TabItemModel>();
             AddTabCommand = new RelayCommand(AddTab);
             AddConnectionCommand = new RelayCommand(async () => await AddConnectionAsync());
-            Action1Command = new RelayCommand(DoAction1);
-            Action2Command = new RelayCommand(DoAction2);
-            Action3Command = new RelayCommand(DoAction3);
+            Select1000Command = new RelayCommand(Select1000);
+            EditDataCommand = new RelayCommand(EditData);
+            DesignTableCommand = new RelayCommand(DesignTable);
         }
 
         private void AddTab()
@@ -80,19 +80,24 @@ namespace DbPad.ViewModels
             Nodes.AddRange(nodes);
         }
 
-        private void DoAction1()
+        private void Select1000()
         {
-            // Ваш код для действия 1
+            Tabs.Add(new TabItemModel
+            {
+                TabCaption = "Select Top 1000",
+                Text1 = "SELECT TOP 1000 * FROM [TableName];",
+                Text2 = "-- Results will be displayed here"
+            });
+
         }
 
-        private void DoAction2()
+        private void EditData()
         {
-            // Ваш код для действия 2
+         
         }
 
-        private void DoAction3()
+        private void DesignTable()
         {
-            // Ваш код для действия 3
         }
     }
 }
