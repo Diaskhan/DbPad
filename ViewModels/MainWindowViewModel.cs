@@ -26,11 +26,7 @@ namespace DbPad.ViewModels
         {
             Nodes = new ObservableCollection<Node>
             {
-                new Node("Animals", new ObservableCollection<Node>
-                {
-                    new Node("Mammals", null)
-
-                })
+                new Node("Empty Connection", new ObservableCollection<Node>(),NodeType.Connection)
             };
 
             Tabs = new ObservableCollection<TabItemModel>();

@@ -2,6 +2,7 @@
 {
     public enum NodeType
     {
+        Connection,
         Database,
         Table,
         View,
@@ -9,7 +10,7 @@
         Function,
         Column,
         Schema,
-        Other
+        Other,
     }
 
 
