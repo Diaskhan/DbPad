@@ -33,6 +33,16 @@
 				<TreeView.ItemTemplate>
 					<TreeDataTemplate ItemsSource="{Binding SubNodes}">
 						<TextBlock Text="{Binding Title}">
+							<TextBlock.ContextMenu>
+								<ContextMenu DataContext="{Binding $parent[TreeView].DataContext}">
+									<MenuItem Header="Action1Command"
+											  Command="{Binding Action1Command}"
+											  CommandParameter="{Binding}" />
+									<MenuItem Header="Action2Command"
+											  Command="{Binding Action2Command}"
+											  CommandParameter="{Binding}" />
+								</ContextMenu>
+							</TextBlock.ContextMenu>
 						</TextBlock>
 					</TreeDataTemplate>
 				</TreeView.ItemTemplate>
