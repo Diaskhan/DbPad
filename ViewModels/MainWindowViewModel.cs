@@ -91,7 +91,7 @@ namespace DbPad.ViewModels
             Node? selectedNode = parameter as Node;
             Tabs.Add(new TabItemModel
             {
-                TabCaption = "Select Top 1000",
+                TabCaption= $"FROM {selectedNode.Title}",
                 Text1 = $"SELECT TOP 1000 * FROM [{selectedNode.Title}];",
                 Text2 = "-- Results will be displayed here"
             });
