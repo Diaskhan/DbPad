@@ -37,10 +37,10 @@
 								<ContextMenu DataContext="{Binding $parent[TreeView].DataContext}">
 									<MenuItem Header="Select * 1000"
 											  Command="{Binding Select1000Command}"
-											  CommandParameter="{Binding}" />
+											  CommandParameter="{Binding $parent[TreeView].SelectedItem}" />
 									<MenuItem Header="Edit Table"
 											  Command="{Binding EditDataCommand}"
-											  CommandParameter="{Binding}" />
+											  CommandParameter="{Binding $parent[TreeView].SelectedItem}" />
 								</ContextMenu>
 							</TextBlock.ContextMenu>
 						</TextBlock>

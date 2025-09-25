@@ -14,9 +14,13 @@ namespace DbPad.ViewModels
         public ObservableCollection<TabItemModel> Tabs { get; }
         public ICommand AddTabCommand { get; }
         public RelayCommand AddConnectionCommand { get; }
-        public ICommand Select1000Command { get; }
-        public ICommand EditDataCommand { get; }
-        public ICommand DesignTableCommand { get; }
+
+
+        #region COMANDS FOR CONTEXT MENU
+        public ICommand Select1000Command { get; set; }
+        public ICommand EditDataCommand { get; set; }
+        public ICommand DesignTableCommand { get; set; }
+        #endregion
 
         public MainWindowViewModel()
         {
@@ -30,19 +34,21 @@ namespace DbPad.ViewModels
             };
 
             Tabs = new ObservableCollection<TabItemModel>();
+
             AddTabCommand = new RelayCommand(AddTab);
-            AddConnectionCommand = new RelayCommand(async () => await AddConnectionAsync());
+            AddConnectionCommand = new RelayCommand(async (parameter) => await AddConnectionAsync(null));
+
             Select1000Command = new RelayCommand(Select1000);
             EditDataCommand = new RelayCommand(EditData);
             DesignTableCommand = new RelayCommand(DesignTable);
         }
 
-        private void AddTab()
+        private void AddTab(object? parameter)
         {
             Tabs.Add(new TabItemModel());
         }
 
-        private async Task AddConnectionAsync()
+        private async Task AddConnectionAsync(object? parameter)
         {
             var connectionString = "Server=.\\sqlexpress;Trusted_Connection=True;TrustServerCertificate=True;";
             var nodes = new List<Node>();
@@ -80,23 +86,24 @@ namespace DbPad.ViewModels
             Nodes.AddRange(nodes);
         }
 
-        private void Select1000()
+        private void Select1000(object parameter)
         {
+            Node? selectedNode = parameter as Node;
             Tabs.Add(new TabItemModel
             {
                 TabCaption = "Select Top 1000",
-                Text1 = "SELECT TOP 1000 * FROM [TableName];",
+                Text1 = $"SELECT TOP 1000 * FROM [{selectedNode.Title}];",
                 Text2 = "-- Results will be displayed here"
             });
 
         }
 
-        private void EditData()
+        private void EditData(object parameter)
         {
          
         }
 
-        private void DesignTable()
+        private void DesignTable(object parameter)
         {
         }
     }
