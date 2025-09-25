@@ -38,7 +38,6 @@ namespace DbPad.ViewModels
 
         private async Task AddConnectionAsync()
         {
-            // Пример строки подключения (замените на свою)
             var connectionString = "Server=.\\sqlexpress;Trusted_Connection=True;TrustServerCertificate=True;";
             var nodes = new List<Node>();
 
@@ -46,7 +45,6 @@ namespace DbPad.ViewModels
             {
                 await connection.OpenAsync();
 
-                // Получаем список баз данных
                 var databases = new List<Node>();
                 using (var cmd = new SqlCommand("SELECT name FROM sys.databases", connection))
                 using (var reader = await cmd.ExecuteReaderAsync())
@@ -58,7 +56,6 @@ namespace DbPad.ViewModels
                     }
                 }
 
-                // Для каждой базы получаем таблицы
                 foreach (var db in databases)
                 {
                     using (var cmd = new SqlCommand($"USE [{db.Title}]; SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'", connection))
