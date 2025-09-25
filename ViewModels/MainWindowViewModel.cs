@@ -71,7 +71,7 @@ namespace DbPad.ViewModels
                     {
                         while (await reader.ReadAsync())
                         {
-                            db.SubNodes.Add(new Node(reader.GetString(0), NodeType.Table));
+                            db.SubNodes?.Add(new Node(reader.GetString(0), NodeType.Table));
                         }
                     }
                 }
@@ -87,8 +87,8 @@ namespace DbPad.ViewModels
             Node? selectedNode = parameter as Node;
             Tabs.Add(new TabItemModel
             {
-                TabCaption= $"FROM {selectedNode.Title}",
-                Text1 = $"SELECT TOP 1000 * FROM [{selectedNode.Title}];",
+                TabCaption= $"FROM {selectedNode?.Title}",
+                Text1 = $"SELECT TOP 1000 * FROM [{selectedNode?.Title}];",
                 Text2 = "-- Results will be displayed here"
             });
 

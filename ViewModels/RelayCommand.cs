@@ -5,10 +5,10 @@ namespace DbPad.ViewModels
 {
     public class RelayCommand : ICommand
     {
-        private readonly Action<object> _execute;
+        private readonly Action<object?> _execute;
         private readonly Func<bool>? _canExecute;
 
-        public RelayCommand(Action<object> execute, Func<bool>? canExecute = null)
+        public RelayCommand(Action<object?> execute, Func<bool>? canExecute = null)
         {
             _execute = execute;
             _canExecute = canExecute;
