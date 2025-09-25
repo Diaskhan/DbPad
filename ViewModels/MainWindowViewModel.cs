@@ -14,6 +14,9 @@ namespace DbPad.ViewModels
         public ObservableCollection<TabItemModel> Tabs { get; }
         public ICommand AddTabCommand { get; }
         public RelayCommand AddConnectionCommand { get; }
+        public ICommand Action1Command { get; }
+        public ICommand Action2Command { get; }
+        public ICommand Action3Command { get; }
 
         public MainWindowViewModel()
         {
@@ -22,13 +25,16 @@ namespace DbPad.ViewModels
                 new Node("Animals", new ObservableCollection<Node>
                 {
                     new Node("Mammals", null)
-                    
+
                 })
             };
 
             Tabs = new ObservableCollection<TabItemModel>();
             AddTabCommand = new RelayCommand(AddTab);
             AddConnectionCommand = new RelayCommand(async () => await AddConnectionAsync());
+            Action1Command = new RelayCommand(DoAction1);
+            Action2Command = new RelayCommand(DoAction2);
+            Action3Command = new RelayCommand(DoAction3);
         }
 
         private void AddTab()
@@ -52,7 +58,7 @@ namespace DbPad.ViewModels
                     while (await reader.ReadAsync())
                     {
                         var dbName = reader.GetString(0);
-                        databases.Add(new Node(dbName, new ObservableCollection<Node>(),NodeType.Database));
+                        databases.Add(new Node(dbName, new ObservableCollection<Node>(), NodeType.Database));
                     }
                 }
 
@@ -63,7 +69,7 @@ namespace DbPad.ViewModels
                     {
                         while (await reader.ReadAsync())
                         {
-                            db.SubNodes.Add(new Node(reader.GetString(0),NodeType.Table));
+                            db.SubNodes.Add(new Node(reader.GetString(0), NodeType.Table));
                         }
                     }
                 }
@@ -72,6 +78,21 @@ namespace DbPad.ViewModels
             }
             Nodes.Clear();
             Nodes.AddRange(nodes);
+        }
+
+        private void DoAction1()
+        {
+            // Ваш код для действия 1
+        }
+
+        private void DoAction2()
+        {
+            // Ваш код для действия 2
+        }
+
+        private void DoAction3()
+        {
+            // Ваш код для действия 3
         }
     }
 }
