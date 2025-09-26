@@ -43,7 +43,7 @@ namespace DbPad.ViewModels
             return true;
         }
 
-        private async Task ExecuteSQLAsync(object? parameter)
+        public async Task ExecuteSQLAsync(object? parameter)
         {
             try
             {

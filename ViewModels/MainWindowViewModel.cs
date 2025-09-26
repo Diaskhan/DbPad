@@ -77,6 +77,7 @@ namespace DbPad.ViewModels
                 Database = selectedNode?.Database ?? ""
             });
             SelectedTab = Tabs.LastOrDefault();
+            SelectedTab?.ExecuteSQLCommand.Execute(null);
 
         }
 
