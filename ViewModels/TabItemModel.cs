@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using System;
 using System.ComponentModel;
+using System.Data;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -37,6 +38,21 @@ namespace DbPad.ViewModels
             get => _database;
             set => SetField(ref _database, value);
         }
+        private DataTable _dbResults = new();
+        public DataTable DbResults
+        {
+            get => _dbResults;
+            set
+            {
+                if (SetField(ref _dbResults, value))
+                {
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ResultsView)));
+                }
+            }
+        }
+
+        public DataView ResultsView => _dbResults.AsDataView();
+
         public TabItemModel()
         {
 
@@ -60,48 +76,36 @@ namespace DbPad.ViewModels
 
         private async Task ExecuteSQLAsync(object? parameter)
         {
-            if ( string.IsNullOrWhiteSpace(Query))
-            {
+            if (string.IsNullOrWhiteSpace(Query))
                 return;
-            }
-
 
             try
             {
-
                 using (var connection = new SqlConnection(connectionString))
                 {
                     await connection.OpenAsync();
-                    connection.ChangeDatabase(Database);
+                    if (!string.IsNullOrWhiteSpace(Database))
+                        connection.ChangeDatabase(Database);
 
                     using (var cmd = new SqlCommand(Query, connection))
                     using (var reader = await cmd.ExecuteReaderAsync())
                     {
-                        var results = new System.Text.StringBuilder();
+                        var dataTable = new DataTable();
+                        dataTable.Load(reader); // Заполняем DataTable результатами
 
-                        for (int i = 0; i < reader.FieldCount; i++)
-                        {
-                            results.Append(reader.GetName(i)).Append("\t");
-                        }
-                        results.AppendLine();
-
-                        while (await reader.ReadAsync())
-                        {
-                            for (int i = 0; i < reader.FieldCount; i++)
-                            {
-                                results.Append(reader[i]?.ToString()).Append("\t");
-                            }
-                            results.AppendLine();
-                        }
-
-                        Results = results.ToString();
+                        DbResults = dataTable;  // уведомим привязки
+                        Results = $"Returned {dataTable.Rows.Count} rows"; // можно оставить как статус
                     }
                 }
             }
             catch (Exception ex)
             {
                 Results = "Error executing: " + ex.Message;
+
+                // Если нужно очищать таблицу в случае ошибки:
+                DbResults = new DataTable();
             }
         }
+
     }
 }
