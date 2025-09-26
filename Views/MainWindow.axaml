@@ -8,9 +8,9 @@
         x:DataType="vm:MainWindowViewModel"
 		>
 	<!-- Main content below toolbar -->
-	<Grid Grid.Row="1" Grid.ColumnSpan="2">
+	<Grid Grid.ColumnSpan="2">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="350"/>
+			<ColumnDefinition Width="300"/>
 			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
@@ -24,12 +24,15 @@
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
-			<StackPanel Orientation="Vertical" DockPanel.Dock="Top" Margin="0,0,0,5">
-				<Button Content="+ Connection" Margin="1,0,0,0" Command="{Binding AddConnectionCommand}"/>
-				<Button Content="- Connection" Margin="1,0,0,0"/>
-				<Button Content="Edit Connection" Margin="1,0,0,0"/>
-				<Button Content="Add Tab" Command="{Binding AddTabCommand}"/>
-			</StackPanel>
+			<Border HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="Gray" BorderThickness="">
+				<WrapPanel  MinHeight="50">
+					<Button Content="+ Connection" Margin="5,0,0,0" Command="{Binding AddConnectionCommand}"/>
+					<Button Content="- Connection" Margin="5,0,0,0"/>
+					<Button Content="Edit Connection" Margin="5,0,0,0"/>
+					<Button Content="Add Tab" Margin="5,0,0,0" Command="{Binding AddTabCommand}"/>
+				</WrapPanel>
+			</Border>
+			
 			<TreeView Grid.Row="1" ItemsSource="{Binding Nodes}">
 				<TreeView.ItemTemplate>
 					<TreeDataTemplate ItemsSource="{Binding SubNodes}">
