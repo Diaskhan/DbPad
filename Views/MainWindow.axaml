@@ -58,9 +58,6 @@
 			</Grid.RowDefinitions>
 
 			<StackPanel>
-
-
-
 				<TabControl ItemsSource="{Binding Tabs}" SelectedItem="{Binding SelectedTab}">
 					<TabControl.ItemTemplate>
 						<DataTemplate>
@@ -72,9 +69,9 @@
 							<Grid>
 								<Grid.RowDefinitions>
 									<RowDefinition/>
-									<RowDefinition Height="300"/>
 									<RowDefinition Height="100"/>
-									<RowDefinition Height="200"/>
+									<RowDefinition Height="100"/>
+									<RowDefinition Height="*"/>
 								</Grid.RowDefinitions>
 								<StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,0">
 									<Button Content="Execute" Command="{Binding ExecuteSQLCommand}"/>

@@ -55,7 +55,6 @@ namespace DbPad.ViewModels
 
         public TabItemModel()
         {
-
             ExecuteSQLCommand = new RelayCommand(async (parameter) => await ExecuteSQLAsync(parameter));
         }
 

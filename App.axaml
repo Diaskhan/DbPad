@@ -11,25 +11,8 @@
 	</Application.DataTemplates>
 
 	<Application.Styles>
-		<semi:SemiTheme Locale="zh-CN" />
-
-		<Style Selector="TextBlock">
-			<Setter Property="FontFamily" Value="Segoe UI"/>
-		</Style>
-		<Style Selector="Button">
-			<Setter Property="FontFamily" Value="Segoe UI"/>
-		</Style>
-		<Style Selector="MenuItem">
-			<Setter Property="FontFamily" Value="Segoe UI"/>
-		</Style>
-		<Style Selector="TextBox">
-			<Setter Property="FontFamily" Value="Segoe UI"/>
-		</Style>
-
+		<semi:SemiTheme Locale="en-EN" />
 		<semi:DataGridSemiTheme />
-
 	</Application.Styles>
-
-
 
 </Application>

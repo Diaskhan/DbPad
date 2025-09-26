@@ -15,7 +15,10 @@ namespace DbPad.ViewModels
     {
         public string connectionString = "Server=.\\sqlexpress;Trusted_Connection=True;TrustServerCertificate=True;";
         public ObservableCollection<Node> Nodes { get; set; } = new();
-        public ObservableCollection<TabItemModel> Tabs { get; } = new();
+        public ObservableCollection<TabItemModel> Tabs { get; } = new ObservableCollection<TabItemModel>(new[]
+        {
+            new TabItemModel { TabCaption="Tab1",Query="Select * from top1",}
+        });
 
         private TabItemModel? _selectedTab;
         public TabItemModel? SelectedTab
