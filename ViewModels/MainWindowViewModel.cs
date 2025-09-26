@@ -1,5 +1,5 @@
 ﻿using DbPad.Adapter.MsSql;
-using DbPad.Models;
+using DbPad.Common.Models;
 using DynamicData;
 using Microsoft.Data.SqlClient;
 using ReactiveUI;
@@ -60,37 +60,8 @@ namespace DbPad.ViewModels
 
         private async Task AddConnectionAsync(object? parameter)
         {
-            var nodes = new List<Node>();
+            var nodes = await MsSqlAdapter.LoadDatabasesAndTablesAsync(MsSqlAdapter.connectionString);
 
-            using (var connection = new SqlConnection(MsSqlAdapter.connectionString))
-            {
-                await connection.OpenAsync();
-
-                var databases = new List<Node>();
-                using (var cmd = new SqlCommand("SELECT name FROM sys.databases", connection))
-                using (var reader = await cmd.ExecuteReaderAsync())
-                {
-                    while (await reader.ReadAsync())
-                    {
-                        var dbName = reader.GetString(0);
-                        databases.Add(new Node(dbName, dbName, new ObservableCollection<Node>(), NodeType.Database));
-                    }
-                }
-
-                foreach (var db in databases)
-                {
-                    using (var cmd = new SqlCommand($"USE [{db.Title}]; SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'", connection))
-                    using (var reader = await cmd.ExecuteReaderAsync())
-                    {
-                        while (await reader.ReadAsync())
-                        {
-                            db.SubNodes?.Add(new Node(reader.GetString(0), db.Database, NodeType.Table));
-                        }
-                    }
-                }
-
-                nodes.AddRange(databases);
-            }
             Nodes.Clear();
             Nodes.AddRange(nodes);
         }
