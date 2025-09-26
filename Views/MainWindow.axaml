@@ -10,7 +10,7 @@
 	<!-- Main content below toolbar -->
 	<Grid Grid.Row="1" Grid.ColumnSpan="2">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="300"/>
+			<ColumnDefinition Width="350"/>
 			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
@@ -24,10 +24,11 @@
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
-			<StackPanel Height="50" Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,0">
+			<StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,0,0,5">
 				<Button Content="+ Connection" Margin="1,0,0,0" Command="{Binding AddConnectionCommand}"/>
 				<Button Content="- Connection" Margin="1,0,0,0"/>
 				<Button Content="Edit Connection" Margin="1,0,0,0"/>
+				<Button Content="Add Tab" Command="{Binding AddTabCommand}"/>
 			</StackPanel>
 			<TreeView Grid.Row="1" ItemsSource="{Binding Nodes}">
 				<TreeView.ItemTemplate>
@@ -53,16 +54,11 @@
 		<!-- Right side: vertical split for input and output -->
 		<Grid Grid.Column="1" Margin="8">
 			<Grid.RowDefinitions>
-				<RowDefinition Height="300"/>
 				<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
 
 			<StackPanel>
 
-				<StackPanel Height="50" Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,0">
-					<Button Content="Add Tab" Command="{Binding AddTabCommand}"/>
-					<Button Content="Execute" Command="{Binding ExecuteSQLCommand}"/>
-				</StackPanel>
 
 
 				<TabControl ItemsSource="{Binding Tabs}" SelectedItem="{Binding SelectedTab}">
@@ -75,11 +71,15 @@
 						<DataTemplate x:DataType="vm:TabItemModel">
 							<Grid>
 								<Grid.RowDefinitions>
+									<RowDefinition/>
 									<RowDefinition Height="300"/>
 									<RowDefinition Height="300"/>
 								</Grid.RowDefinitions>
-								<TextBox Grid.Row="0" Text="{Binding Text1, Mode=TwoWay}" AcceptsReturn="True"/>
-								<TextBox Grid.Row="1" Text="{Binding Text2, Mode=TwoWay}" Watermark="Text 2"/>
+								<StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,0">
+									<Button Content="Execute" Command="{Binding ExecuteSQLCommand}"/>
+								</StackPanel>
+								<TextBox Grid.Row="1" Text="{Binding Query, Mode=TwoWay}" AcceptsReturn="True"/>
+								<TextBox Grid.Row="2" Text="{Binding Results, Mode=TwoWay}" Watermark="Text 2"/>
 							</Grid>
 						</DataTemplate>
 					</TabControl.ContentTemplate>

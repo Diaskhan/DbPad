@@ -28,8 +28,6 @@ namespace DbPad.ViewModels
         public ICommand AddTabCommand { get; }
         public RelayCommand AddConnectionCommand { get; }
 
-        public ICommand ExecuteSQLCommand { get; }
-
 
 
         #region COMANDS FOR CONTEXT MENU
@@ -45,7 +43,6 @@ namespace DbPad.ViewModels
 
             AddTabCommand = new RelayCommand(AddTab);
             AddConnectionCommand = new RelayCommand(async (parameter) => await AddConnectionAsync(null));
-            ExecuteSQLCommand = new RelayCommand(async (parameter) => await ExecuteSQLAsync(parameter));
 
 
             Select1000Command = new RelayCommand(Select1000);
@@ -53,52 +50,7 @@ namespace DbPad.ViewModels
             DesignTableCommand = new RelayCommand(DesignTable);
         }
 
-        private async Task ExecuteSQLAsync(object? parameter)
-        {
-            if (_selectedTab == null || string.IsNullOrWhiteSpace(_selectedTab.Text1))
-            {
-                return;
-            }
-
-
-            try
-            {
-
-                using (var connection = new SqlConnection(connectionString))
-                {
-                    await connection.OpenAsync();
-                    connection.ChangeDatabase(_selectedTab.Database);
-
-                    using (var cmd = new SqlCommand(_selectedTab.Text1, connection))
-                    using (var reader = await cmd.ExecuteReaderAsync())
-                    {
-                        var results = new System.Text.StringBuilder();
-
-                        for (int i = 0; i < reader.FieldCount; i++)
-                        {
-                            results.Append(reader.GetName(i)).Append("\t");
-                        }
-                        results.AppendLine();
-
-                        // Данные
-                        while (await reader.ReadAsync())
-                        {
-                            for (int i = 0; i < reader.FieldCount; i++)
-                            {
-                                results.Append(reader[i]?.ToString()).Append("\t");
-                            }
-                            results.AppendLine();
-                        }
-
-                        _selectedTab.Text2 = results.ToString();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                _selectedTab.Text2 = "Ошибка выполнения: " + ex.Message;
-            }
-        }
+     
 
 
         private void AddTab(object? parameter)
@@ -149,8 +101,8 @@ namespace DbPad.ViewModels
             Tabs.Add(new TabItemModel
             {
                 TabCaption = $"FROM {selectedNode?.Title}",
-                Text1 = $"SELECT TOP 1000 * FROM {selectedNode?.Title}",
-                Text2 = "-- Results will be displayed here",
+                Query = $"SELECT TOP 1000 * FROM {selectedNode?.Title}",
+                Results = "-- Results will be displayed here",
                 Database = selectedNode?.Database ?? ""
             });
             SelectedTab = Tabs.LastOrDefault();
