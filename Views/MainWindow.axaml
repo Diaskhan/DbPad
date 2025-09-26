@@ -58,8 +58,14 @@
 			</Grid.RowDefinitions>
 
 			<StackPanel>
-				<Button Content="Add Tab" Command="{Binding AddTabCommand}" Margin="0,0,0,8"/>
-				<TabControl ItemsSource="{Binding Tabs}">
+
+				<StackPanel Height="50" Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,0">
+					<Button Content="Add Tab" Command="{Binding AddTabCommand}"/>
+					<Button Content="Execute" Command="{Binding ExecuteSQLCommand}"/>
+				</StackPanel>
+
+
+				<TabControl ItemsSource="{Binding Tabs}" SelectedItem="{Binding SelectedTab}">
 					<TabControl.ItemTemplate>
 						<DataTemplate>
 							<TextBlock Text="{Binding TabCaption, FallbackValue=Tab}" />
