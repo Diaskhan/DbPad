@@ -8,18 +8,14 @@
         x:DataType="vm:MainWindowViewModel"
 		>
 	<!-- Main content below toolbar -->
-	<Grid Grid.ColumnSpan="2">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="300"/>
-			<ColumnDefinition Width="*"/>
-		</Grid.ColumnDefinitions>
+	<Grid ColumnDefinitions="275,Auto,*">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 
 
 		<!-- left side -->
-		<Grid Grid.Row="1" Grid.Column="0" Margin="8">
+		<Grid  Grid.Column="0" Margin="8">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="*"/>
@@ -53,9 +49,15 @@
 			</TreeView>
 		</Grid>
 
+		<GridSplitter Grid.Column="1"
+							Width="5"
+							Background="DarkGray"
+							ResizeDirection="Columns"
+							ResizeBehavior="PreviousAndNext"
+							HorizontalAlignment="Stretch"/>
 
 		<!-- Right side: vertical split for input and output -->
-		<Grid Grid.Column="1" Margin="8">
+		<Grid Grid.Column="2" Margin="8">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
