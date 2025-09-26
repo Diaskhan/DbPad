@@ -1,4 +1,5 @@
 ﻿using DbPad.Adapter.MsSql;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Dynamic;
@@ -44,15 +45,23 @@ namespace DbPad.ViewModels
 
         private async Task ExecuteSQLAsync(object? parameter)
         {
-            var result = await MsSqlAdapter.ExecuteSQLAsync(_query, _database);
-            if (result != null)
+            try
             {
-                DbResults = result.ToExpandoCollection();
-                Results = $"Returned {result.Rows.Count} rows";
+                var result = await MsSqlAdapter.ExecuteSQLAsync(_query, _database);
+                if (result != null)
+                {
+                    DbResults = result.ToExpandoCollection();
+                    Results = $"Returned {result.Rows.Count} rows";
+                }
+                else
+                {
+                    Results = "Error executing SQL";
+                    DbResults = new();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Results = "Error executing SQL";
+                Results = $"Error executing SQL: {ex.Message}";
                 DbResults = new();
             }
         }

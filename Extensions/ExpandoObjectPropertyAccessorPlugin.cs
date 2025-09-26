@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Avalonia.Data;
+using Avalonia.Data.Core.Plugins;
+using Avalonia.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using Avalonia.Data;
-using Avalonia.Data.Core.Plugins;
-using Avalonia.Utilities;
 
 namespace DbPad.Extensions;
 

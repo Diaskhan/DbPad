@@ -50,7 +50,7 @@ namespace DbPad.ViewModels
             DesignTableCommand = new RelayCommand(DesignTable);
         }
 
-     
+
 
 
         private void AddTab(object? parameter)
