@@ -13,7 +13,8 @@ namespace DbPad.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public ObservableCollection<Node> Nodes { get; set; }
+        public string connectionString = "Server=.\\sqlexpress;Trusted_Connection=True;TrustServerCertificate=True;";
+        public ObservableCollection<Node> Nodes { get; set; } = new();
         public ObservableCollection<TabItemModel> Tabs { get; } = new();
 
         private TabItemModel? _selectedTab;
@@ -39,10 +40,6 @@ namespace DbPad.ViewModels
 
         public MainWindowViewModel()
         {
-            Nodes = new ObservableCollection<Node>
-            {
-                new Node("Empty Connection", new ObservableCollection<Node>(),NodeType.Connection)
-            };
 
             Tabs = new ObservableCollection<TabItemModel>();
 
@@ -66,19 +63,17 @@ namespace DbPad.ViewModels
 
             try
             {
-                var connectionString = "Server=.\\sqlexpress;Trusted_Connection=True;TrustServerCertificate=True;";
 
                 using (var connection = new SqlConnection(connectionString))
                 {
                     await connection.OpenAsync();
-                    //connection.ChangeDatabase("master");
+                    connection.ChangeDatabase(_selectedTab.Database);
 
                     using (var cmd = new SqlCommand(_selectedTab.Text1, connection))
                     using (var reader = await cmd.ExecuteReaderAsync())
                     {
                         var results = new System.Text.StringBuilder();
 
-                        // Заголовки колонок
                         for (int i = 0; i < reader.FieldCount; i++)
                         {
                             results.Append(reader.GetName(i)).Append("\t");
@@ -113,7 +108,6 @@ namespace DbPad.ViewModels
 
         private async Task AddConnectionAsync(object? parameter)
         {
-            var connectionString = "Server=.\\sqlexpress;Trusted_Connection=True;TrustServerCertificate=True;";
             var nodes = new List<Node>();
 
             using (var connection = new SqlConnection(connectionString))
@@ -127,7 +121,7 @@ namespace DbPad.ViewModels
                     while (await reader.ReadAsync())
                     {
                         var dbName = reader.GetString(0);
-                        databases.Add(new Node(dbName, new ObservableCollection<Node>(), NodeType.Database));
+                        databases.Add(new Node(dbName, dbName, new ObservableCollection<Node>(), NodeType.Database));
                     }
                 }
 
@@ -138,7 +132,7 @@ namespace DbPad.ViewModels
                     {
                         while (await reader.ReadAsync())
                         {
-                            db.SubNodes?.Add(new Node(reader.GetString(0), NodeType.Table));
+                            db.SubNodes?.Add(new Node(reader.GetString(0), db.Database, NodeType.Table));
                         }
                     }
                 }
@@ -155,8 +149,9 @@ namespace DbPad.ViewModels
             Tabs.Add(new TabItemModel
             {
                 TabCaption = $"FROM {selectedNode?.Title}",
-                Text1 = $"SELECT TOP 1000 * FROM [{selectedNode?.Title}];",
-                Text2 = "-- Results will be displayed here"
+                Text1 = $"SELECT TOP 1000 * FROM {selectedNode?.Title}",
+                Text2 = "-- Results will be displayed here",
+                Database = selectedNode?.Database ?? ""
             });
             SelectedTab = Tabs.LastOrDefault();
 

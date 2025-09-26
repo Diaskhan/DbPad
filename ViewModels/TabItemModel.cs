@@ -8,6 +8,7 @@ namespace DbPad.ViewModels
         private string _tabCaption = "Tab1";
         private string _text1 = "Text1";
         private string _text2 = "Text2";
+        private string _database = "";
 
         public string TabCaption
         {
@@ -25,6 +26,11 @@ namespace DbPad.ViewModels
         {
             get => _text2;
             set => SetField(ref _text2, value);
+        }
+        public string Database
+        {
+            get => _database;
+            set => SetField(ref _database, value);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
