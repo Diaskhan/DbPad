@@ -1,5 +1,6 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:semi="https://irihi.tech/semi"
              x:Class="DbPad.App"
              xmlns:local="using:DbPad"
              RequestedThemeVariant="Default">
@@ -10,7 +11,7 @@
 	</Application.DataTemplates>
 
 	<Application.Styles>
-		<SimpleTheme />
+		<semi:SemiTheme Locale="zh-CN" />
 
 		<Style Selector="TextBlock">
 			<Setter Property="FontFamily" Value="Segoe UI"/>
@@ -24,6 +25,11 @@
 		<Style Selector="TextBox">
 			<Setter Property="FontFamily" Value="Segoe UI"/>
 		</Style>
+
+		<semi:DataGridSemiTheme />
+
 	</Application.Styles>
+
+
 
 </Application>

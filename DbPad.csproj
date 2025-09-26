@@ -28,9 +28,11 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.3.6" />
-    <PackageReference Include="Avalonia.Themes.Simple" Version="11.3.6" />
+    <PackageReference Include="Dock.Avalonia.Themes.Default" Version="0.10.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.1" />
     <PackageReference Include="ReactiveUI" Version="20.4.1" />
+    <PackageReference Include="Semi.Avalonia" Version="11.2.1.10" />
+    <PackageReference Include="Semi.Avalonia.DataGrid" Version="11.2.1.10" />
   </ItemGroup>
 
   <ItemGroup>
