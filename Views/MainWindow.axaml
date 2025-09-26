@@ -75,14 +75,14 @@
 							<Grid>
 								<Grid.RowDefinitions>
 									<RowDefinition/>
-									<RowDefinition Height="100"/>
+									<RowDefinition/>
 									<RowDefinition/>
 									<RowDefinition Height="*"/>
 								</Grid.RowDefinitions>
 								<StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,0">
 									<Button Content="Execute" Command="{Binding ExecuteSQLCommand}"/>
 								</StackPanel>
-								<TextBox Grid.Row="1" Text="{Binding Query, Mode=TwoWay}" AcceptsReturn="True"/>
+								<TextBox Grid.Row="1" MinHeight="300" Text="{Binding Query, Mode=TwoWay}" AcceptsReturn="True" VerticalContentAlignment="Top"/>
 								<TextBox Grid.Row="2" Text="{Binding Results, Mode=TwoWay}" Watermark="Text 2"/>
 								<DataGrid Grid.Row="3" ItemsSource="{Binding DbResults}" local:DataGridColumnHelper.DeriveExpandoColumns="True"/>
 							</Grid>
