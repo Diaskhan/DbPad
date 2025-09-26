@@ -1,8 +1,8 @@
-﻿using DbPad.Models;
+﻿using DbPad.Adapter.MsSql;
+using DbPad.Models;
 using DynamicData;
 using Microsoft.Data.SqlClient;
 using ReactiveUI;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,7 +13,6 @@ namespace DbPad.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public string connectionString = "Server=.\\sqlexpress;Trusted_Connection=True;TrustServerCertificate=True;";
         public ObservableCollection<Node> Nodes { get; set; } = new();
         public ObservableCollection<TabItemModel> Tabs { get; } = new ObservableCollection<TabItemModel>(new[]
         {
@@ -41,12 +40,10 @@ namespace DbPad.ViewModels
 
         public MainWindowViewModel()
         {
-
             Tabs = new ObservableCollection<TabItemModel>();
 
             AddTabCommand = new RelayCommand(AddTab);
             AddConnectionCommand = new RelayCommand(async (parameter) => await AddConnectionAsync(null));
-
 
             Select1000Command = new RelayCommand(Select1000);
             EditDataCommand = new RelayCommand(EditData);
@@ -65,7 +62,7 @@ namespace DbPad.ViewModels
         {
             var nodes = new List<Node>();
 
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(MsSqlAdapter.connectionString))
             {
                 await connection.OpenAsync();
 
@@ -104,7 +101,7 @@ namespace DbPad.ViewModels
             Tabs.Add(new TabItemModel
             {
                 TabCaption = $"FROM {selectedNode?.Title}",
-                Query = $"SELECT TOP 1000 * FROM {selectedNode?.Title}",
+                Query = MsSqlAdapter.Select1000Query(selectedNode?.Title ?? ""),
                 Results = "-- Results will be displayed here",
                 Database = selectedNode?.Database ?? ""
             });

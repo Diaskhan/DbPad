@@ -36,6 +36,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DbPad.Adapter.MsSql\DbPad.Adapter.MsSql.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Assets\Icons\database.svg" />
     <Resource Include="Assets\Icons\table.svg" />
   </ItemGroup>

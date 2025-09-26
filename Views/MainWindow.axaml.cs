@@ -10,5 +10,8 @@ namespace DbPad.Views
             InitializeComponent();
             DataContext = new MainWindowViewModel();
         }
+
+
+
     }
 }
