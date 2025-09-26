@@ -33,6 +33,7 @@ public class DataGridColumnHelper
 
     private static void OnItemsSourceChanged2(IEnumerable obj, DataGrid grid)
     {
+        grid.Columns.Clear();
         if (obj is not IEnumerable<ExpandoObject> expandoObjects) return;
         var columns = new Dictionary<string, DataGridColumn>();
         var sampleObject = expandoObjects.FirstOrDefault();

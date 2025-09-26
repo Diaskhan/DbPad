@@ -84,7 +84,7 @@
 								</StackPanel>
 								<TextBox Grid.Row="1" Text="{Binding Query, Mode=TwoWay}" AcceptsReturn="True"/>
 								<TextBox Grid.Row="2" Text="{Binding Results, Mode=TwoWay}" Watermark="Text 2"/>
-								<DataGrid Name="MyGrid" Grid.Row="3" ItemsSource="{Binding DbResults}" local:DataGridColumnHelper.DeriveExpandoColumns="True"/>
+								<DataGrid Grid.Row="3" ItemsSource="{Binding DbResults}" local:DataGridColumnHelper.DeriveExpandoColumns="True"/>
 							</Grid>
 						</DataTemplate>
 					</TabControl.ContentTemplate>
