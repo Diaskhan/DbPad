@@ -70,7 +70,30 @@
 			<TabControl ItemsSource="{Binding Tabs}" SelectedItem="{Binding SelectedTab}">
 				<TabControl.ItemTemplate>
 					<DataTemplate>
-						<TextBlock Text="{Binding TabCaption, FallbackValue=Tab}" />
+						<DockPanel VerticalAlignment="Stretch">
+							<Button DockPanel.Dock="Right"
+									Margin="5,0,0,0"
+									Padding="5,0"
+									Content="x"
+									FontSize="12"
+									VerticalContentAlignment="Center"
+									HorizontalContentAlignment="Center"
+									Command="{Binding $parent[TabControl].DataContext.RemoveTabCommand}"
+									CommandParameter="{Binding}"
+									Background="Transparent"
+									BorderThickness="0,0,0,0"
+									ToolTip.Tip="Закрыть вкладку">
+								<Button.Styles>
+									<Style Selector="Button:pointerover /template/ ContentPresenter">
+										<Setter Property="Background" Value="LightGray" />
+										<Setter Property="CornerRadius" Value="2" />
+									</Style>
+								</Button.Styles>
+							</Button>
+							<TextBlock Text="{Binding TabCaption, FallbackValue=Tab}"
+									   VerticalAlignment="Center"
+									   ToolTip.Tip="{Binding TabCaption}" />
+						</DockPanel>
 					</DataTemplate>
 				</TabControl.ItemTemplate>
 				<TabControl.ContentTemplate>

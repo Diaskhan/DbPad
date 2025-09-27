@@ -31,6 +31,7 @@ namespace DbPad.ViewModels
 
         public ICommand AddTabCommand { get; }
         public RelayCommand AddConnectionCommand { get; }
+        public RelayCommand RemoveTabCommand { get; }
 
         public ICommand ConnectCommand { get; } // <-- Добавлена новая команда ConnectCommand
 
@@ -52,12 +53,36 @@ namespace DbPad.ViewModels
             Select1000Command = new RelayCommand(Select1000);
             EditDataCommand = new RelayCommand(EditData);
             DesignTableCommand = new RelayCommand(DesignTable);
-            
+            RemoveTabCommand = new RelayCommand((parameter) => RemoveTab(parameter as TabItemModel));
+
             // Инициализация новой команды ConnectCommand
             ConnectCommand = new RelayCommand(async (parameter) => await ConnectAsync(parameter));
             
             // Вызов метода для загрузки подключений при запуске
             LoadConnectionsOnStartup();
+        }
+
+        private void RemoveTab(TabItemModel? tab)
+        {
+            if (tab != null && Tabs.Contains(tab))
+            {
+                var tabIndex = Tabs.IndexOf(tab);
+                Tabs.Remove(tab);
+
+                // If the removed tab was selected, select a new one
+                if (SelectedTab == tab)
+                {
+                    if (Tabs.Any())
+                    {
+                        SelectedTab = Tabs.Count > tabIndex ? Tabs[tabIndex] : Tabs[tabIndex - 1];
+                    }
+                    else
+                    {
+                        // No tabs left, maybe add a new one or set SelectedTab to null
+                        SelectedTab = null!; // Or Tabs.Add(new TabItemModel());
+                    }
+                }
+            }
         }
 
         // Метод для загрузки подключений из файла
