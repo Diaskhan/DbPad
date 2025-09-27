@@ -44,4 +44,10 @@
     <Resource Include="Assets\Icons\database.svg" />
     <Resource Include="Assets\Icons\table.svg" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="connections.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

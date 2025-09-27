@@ -1,0 +1,24 @@
+﻿[
+  {
+    "mssql.connections": [
+      {
+        "server": "(localdb)\\mssqllocaldb",
+        "database": "master",
+        "authenticationType": "Integrated",
+        "user": "",
+        "password": "",
+        "savePassword": true,
+        "connectionString": "Server=(localdb)\\mssqllocaldb;Database=master;Integrated Security=True;Connect Timeout=5"
+      },
+      {
+        "server": "localhost",
+        "database": "AdventureWorks",
+        "authenticationType": "SqlLogin",
+        "user": "myuser",
+        "password": "mypassword",
+        "savePassword": true,
+        "connectionString": "Server=localhost;Database=AdventureWorks;User Id=myuser;Password=mypassword;"
+      }
+    ]
+  }
+]
