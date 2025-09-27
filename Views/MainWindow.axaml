@@ -7,6 +7,8 @@
         xmlns:vm="using:DbPad.ViewModels"
         x:DataType="vm:MainWindowViewModel"
 		xmlns:local="clr-namespace:DbPad.Extensions"
+		xmlns:i="using:Avalonia.Xaml.Interactivity"
+        xmlns:ic="using:Avalonia.Xaml.Interactions.Core"
 		>
 	<!-- Main content below toolbar -->
 	<Grid ColumnDefinitions="275,Auto,*">
@@ -34,6 +36,12 @@
 				<TreeView.ItemTemplate>
 					<TreeDataTemplate ItemsSource="{Binding SubNodes}">
 						<TextBlock Text="{Binding Title}">
+							<i:Interaction.Behaviors>
+								<ic:EventTriggerBehavior EventName="DoubleTapped">
+									<ic:InvokeCommandAction Command="{Binding $parent[TreeView].DataContext.ConnectCommand}"
+															CommandParameter="{Binding }" />
+								</ic:EventTriggerBehavior>
+							</i:Interaction.Behaviors>
 							<TextBlock.ContextMenu>
 								<ContextMenu DataContext="{Binding $parent[TreeView].DataContext}">
 									<MenuItem Header="Select * 1000"

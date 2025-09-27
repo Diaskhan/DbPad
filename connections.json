@@ -8,7 +8,7 @@
         "user": "",
         "password": "",
         "savePassword": true,
-        "connectionString": "Server=(localdb)\\mssqllocaldb;Database=master;Integrated Security=True;Connect Timeout=5"
+        "connectionString": "Server=.\\sqlexpress;Trusted_Connection=True;TrustServerCertificate=True;"
       },
       {
         "server": "localhost",

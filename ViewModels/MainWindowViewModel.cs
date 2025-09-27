@@ -32,6 +32,7 @@ namespace DbPad.ViewModels
         public ICommand AddTabCommand { get; }
         public RelayCommand AddConnectionCommand { get; }
 
+        public ICommand ConnectCommand { get; } // <-- Добавлена новая команда ConnectCommand
 
 
         #region КОМАНДЫ ДЛЯ КОНТЕКСТНОГО МЕНЮ
@@ -51,6 +52,9 @@ namespace DbPad.ViewModels
             Select1000Command = new RelayCommand(Select1000);
             EditDataCommand = new RelayCommand(EditData);
             DesignTableCommand = new RelayCommand(DesignTable);
+            
+            // Инициализация новой команды ConnectCommand
+            ConnectCommand = new RelayCommand(async (parameter) => await ConnectAsync(parameter));
             
             // Вызов метода для загрузки подключений при запуске
             LoadConnectionsOnStartup();
@@ -123,24 +127,37 @@ namespace DbPad.ViewModels
                 if (parentConnectionNode != null)
                 {
                     // Очищаем существующие под-узлы и добавляем новые, если узел уже существует
-                    parentConnectionNode.SubNodes?.Clear();
-                    if (parentConnectionNode.SubNodes == null)
-                    {
-                        parentConnectionNode.SubNodes = new ObservableCollection<Node>();
-                    }
-                    parentConnectionNode.SubNodes.AddRange(nodes);
+                    // Вместо AddRange, присваиваем новую ObservableCollection.
+                    // Свойство SubNodes в классе Node теперь имеет сеттер, который уведомляет UI об изменении.
+                    parentConnectionNode.SubNodes = new ObservableCollection<Node>(nodes);
                 }
                 else
                 {
-                    // Если узел родительского подключения не определен, возможно, вы хотите добавить его как новый корневой элемент
-                    // или обновить существующий, если это нежелательное поведение, его можно изменить
-                    Nodes.Clear(); // Рассмотрите, всегда ли это очистка желательна, возможно, вы хотите добавить к определенному родителю.
-                    Nodes.AddRange(nodes);
+                    //// Если узел родительского подключения не определен, возможно, вы хотите добавить его как новый корневой элемент
+                    //// или обновить существующий, если это нежелательное поведение, его можно изменить
+                    //Nodes.Clear(); // Рассмотрите, всегда ли это очистка желательна, возможно, вы хотите добавить к определенному родителю.
+                    //Nodes.AddRange(nodes);
                 }
             }
             else
             {
                 System.Diagnostics.Debug.WriteLine("Строка подключения не предоставлена для AddConnectionAsync.");
+            }
+        }
+
+        // Новая команда для обработки двойного клика по узлу
+        private async Task ConnectAsync(object? parameter)
+        {
+            if (parameter is Node node && node.Type == NodeType.Connection)
+            {
+                // Вызываем существующий метод AddConnectionAsync, который загружает базы данных и таблицы
+                // для указанного узла подключения.
+                await AddConnectionAsync(node);
+                System.Diagnostics.Debug.WriteLine($"Подключение к базе данных: {node.Title}");
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Неверный тип узла для подключения.");
             }
         }
 
