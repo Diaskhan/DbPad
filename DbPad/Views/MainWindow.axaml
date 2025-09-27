@@ -9,6 +9,7 @@
 		xmlns:local="clr-namespace:DbPad.Extensions"
 		xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ic="using:Avalonia.Xaml.Interactions.Core"
+		xmlns:common="clr-namespace:DbPad.Common.Models"
 		>
 	<!-- Main content below toolbar -->
 	<Grid ColumnDefinitions="275,Auto,*">
@@ -34,25 +35,33 @@
 
 			<TreeView Grid.Row="1" ItemsSource="{Binding Nodes}">
 				<TreeView.ItemTemplate>
-					<TreeDataTemplate ItemsSource="{Binding SubNodes}">
-						<TextBlock Text="{Binding Title}">
-							<i:Interaction.Behaviors>
-								<ic:EventTriggerBehavior EventName="DoubleTapped">
-									<ic:InvokeCommandAction Command="{Binding $parent[TreeView].DataContext.ConnectCommand}"
-															CommandParameter="{Binding }" />
-								</ic:EventTriggerBehavior>
-							</i:Interaction.Behaviors>
-							<TextBlock.ContextMenu>
-								<ContextMenu DataContext="{Binding $parent[TreeView].DataContext}">
-									<MenuItem Header="Select * 1000"
-											  Command="{Binding Select1000Command}"
-											  CommandParameter="{Binding $parent[TreeView].SelectedItem}" />
-									<MenuItem Header="Edit Table"
-											  Command="{Binding EditDataCommand}"
-											  CommandParameter="{Binding $parent[TreeView].SelectedItem}" />
-								</ContextMenu>
-							</TextBlock.ContextMenu>
-						</TextBlock>
+					<TreeDataTemplate ItemsSource="{Binding SubNodes}"
+                                      DataType="common:Node">
+						<!-- Указываем DataType для TreeDataTemplate -->
+						<!-- Измененный шаблон: StackPanel для иконки и текста -->
+						<StackPanel Orientation="Horizontal" Spacing="5">
+							<Image Source="{Binding IconSource}"
+								   Width="16" Height="16"
+								   VerticalAlignment="Center"/>
+							<TextBlock Text="{Binding Title}" VerticalAlignment="Center">
+								<i:Interaction.Behaviors>
+									<ic:EventTriggerBehavior EventName="DoubleTapped">
+										<ic:InvokeCommandAction Command="{Binding $parent[TreeView].DataContext.ConnectCommand}"
+																CommandParameter="{Binding }" />
+									</ic:EventTriggerBehavior>
+								</i:Interaction.Behaviors>
+								<TextBlock.ContextMenu>
+									<ContextMenu DataContext="{Binding $parent[TreeView].DataContext}">
+										<MenuItem Header="Select * 1000"
+												  Command="{Binding Select1000Command}"
+												  CommandParameter="{Binding $parent[TreeView].SelectedItem}" />
+										<MenuItem Header="Edit Table"
+												  Command="{Binding EditDataCommand}"
+												  CommandParameter="{Binding $parent[TreeView].SelectedItem}" />
+									</ContextMenu>
+								</TextBlock.ContextMenu>
+							</TextBlock>
+						</StackPanel>
 					</TreeDataTemplate>
 				</TreeView.ItemTemplate>
 			</TreeView>
