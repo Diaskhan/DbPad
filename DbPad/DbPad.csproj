@@ -13,8 +13,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AvaloniaResource Remove="Assets\Icons\database.svg" />
-    <AvaloniaResource Remove="Assets\Icons\table.svg" />
+    <AvaloniaResource Remove="Assets\Icons\**" />
+    <AvaloniaXaml Remove="Assets\Icons\**" />
+    <Compile Remove="Assets\Icons\**" />
+    <EmbeddedResource Remove="Assets\Icons\**" />
+    <None Remove="Assets\Icons\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Remove="Assets\database.png" />
+    <AvaloniaResource Remove="Assets\table.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\database.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\table.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -42,8 +59,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\Icons\database.svg" />
-    <Resource Include="Assets\Icons\table.svg" />
+    <AvaloniaResource Update="Assets\database.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AvaloniaResource>
+    <AvaloniaResource Update="Assets\table.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AvaloniaResource>
   </ItemGroup>
 
   <ItemGroup>

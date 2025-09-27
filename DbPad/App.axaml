@@ -1,6 +1,7 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:semi="https://irihi.tech/semi"
+			 xmlns:extension="clr-namespace:DbPad.Extensions"
              x:Class="DbPad.App"
              xmlns:local="using:DbPad"
              RequestedThemeVariant="Default">
@@ -14,5 +15,10 @@
 		<semi:SemiTheme Locale="en-EN" />
 		<semi:DataGridSemiTheme />
 	</Application.Styles>
+
+
+	<Application.Resources>
+		<extension:StringToImageConverter x:Key="StringToImageConverter" />
+	</Application.Resources>
 
 </Application>
