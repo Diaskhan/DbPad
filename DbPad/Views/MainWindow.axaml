@@ -6,7 +6,7 @@
         Title="DbPad"
         xmlns:vm="using:DbPad.ViewModels"
         x:DataType="vm:MainWindowViewModel"
-		xmlns:local="clr-namespace:DbPad.Extensions"
+		xmlns:extension="clr-namespace:DbPad.Extensions"
 		xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ic="using:Avalonia.Xaml.Interactions.Core"
 		xmlns:common="clr-namespace:DbPad.Common.Models"
@@ -35,8 +35,7 @@
 
 			<TreeView Grid.Row="1" ItemsSource="{Binding Nodes}">
 				<TreeView.ItemTemplate>
-					<TreeDataTemplate ItemsSource="{Binding SubNodes}"
-                                      DataType="common:Node">
+					<TreeDataTemplate ItemsSource="{Binding SubNodes}">
 						<!-- Указываем DataType для TreeDataTemplate -->
 						<!-- Измененный шаблон: StackPanel для иконки и текста -->
 						<StackPanel Orientation="Horizontal" Spacing="5">
@@ -125,7 +124,7 @@
 
 							<TextBox Grid.Row="2" Text="{Binding Results, Mode=TwoWay}" Watermark="Text 2"/>
 
-							<DataGrid Grid.Row="3" ItemsSource="{Binding DbResults}" local:DataGridColumnHelper.DeriveExpandoColumns="True"/>
+							<DataGrid Grid.Row="3" ItemsSource="{Binding DbResults}" extension:DataGridColumnHelper.DeriveExpandoColumns="True"/>
 						</Grid>
 					</DataTemplate>
 				</TabControl.ContentTemplate>
