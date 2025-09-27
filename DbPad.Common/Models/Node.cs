@@ -56,17 +56,18 @@ namespace DbPad.Common.Models
         private string GetIconSource()
         {
             // Предполагается, что у вас есть SVG-файлы в папке Assets/Icons
+            if (Type != NodeType.Connection)
+            {
+                return Type switch
+                {
+                    NodeType.Database => "Assets/database.png",
+                    NodeType.Table => "Assets/table.png"
+                };
+            }
+
             return Type switch
             {
-                NodeType.Connection => "avares://DbPad/Assets/Icons/connection.svg", // Пример пути
-                NodeType.Database => "avares://DbPad/Assets/Icons/database.svg",
-                NodeType.Schema => "avares://DbPad/Assets/Icons/schema.svg",
-                NodeType.Table => "avares://DbPad/Assets/Icons/table.svg",
-                NodeType.View => "avares://DbPad/Assets/Icons/view.svg",
-                NodeType.StoredProcedure => "avares://DbPad/Assets/Icons/storedprocedure.svg",
-                NodeType.Function => "avares://DbPad/Assets/Icons/function.svg",
-                NodeType.Column => "avares://DbPad/Assets/Icons/column.svg",
-                _ => "avares://DbPad/Assets/Icons/other.svg" // Иконка по умолчанию
+                NodeType.Connection => "Assets/sql.connection.png", // Пример пути
             };
         }
     }

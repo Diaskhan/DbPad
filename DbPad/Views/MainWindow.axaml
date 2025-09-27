@@ -39,9 +39,7 @@
 						<!-- Указываем DataType для TreeDataTemplate -->
 						<!-- Измененный шаблон: StackPanel для иконки и текста -->
 						<StackPanel Orientation="Horizontal" Spacing="5">
-							<Image Source="{Binding IconSource}"
-								   Width="16" Height="16"
-								   VerticalAlignment="Center"/>
+							<Image Source="{Binding IconSource, Converter={StaticResource StringToImageConverter}}" Width="16" Height="16"/>
 							<TextBlock Text="{Binding Title}" VerticalAlignment="Center">
 								<i:Interaction.Behaviors>
 									<ic:EventTriggerBehavior EventName="DoubleTapped">

@@ -22,11 +22,16 @@
 
   <ItemGroup>
     <AvaloniaResource Remove="Assets\database.png" />
+    <AvaloniaResource Remove="Assets\sql.conection.png" />
+    <AvaloniaResource Remove="Assets\sql.connection.png" />
     <AvaloniaResource Remove="Assets\table.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\database.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\sql.connection.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\table.png">
