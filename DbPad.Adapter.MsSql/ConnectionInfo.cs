@@ -21,7 +21,7 @@ namespace DbPad.Common.Models
         public string ConnectionString { get; set; } = string.Empty;
 
         [System.Text.Json.Serialization.JsonIgnore]
-        public string DisplayName => string.IsNullOrWhiteSpace(Database) ? Server : $"{Server} [{Database}]";
+        public string DisplayName => Server;
     }
 
     public class ConnectionFileRoot

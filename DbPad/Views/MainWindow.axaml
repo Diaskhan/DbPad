@@ -20,7 +20,7 @@
 
 
 		<!-- left side -->
-		<Grid  Grid.Column="0" Margin="8">
+		<Grid  Grid.Column="0">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="*"/>
@@ -66,15 +66,15 @@
 		</Grid>
 
 		<GridSplitter Grid.Column="1"
-							Width="5"
+							Width="1"
 							Background="DarkGray"
 							ResizeDirection="Columns"
 							ResizeBehavior="PreviousAndNext"
 							HorizontalAlignment="Stretch"/>
 
 		<!-- Right side: vertical split for input and output -->
-		<Grid Grid.Column="2" Margin="8">
-			<view:TabControlView Grid.Column="2" Margin="8"/>
+		<Grid Grid.Column="2" >
+			<view:TabControlView Grid.Column="2"/>
 		</Grid>
 	</Grid>
 
