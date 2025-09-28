@@ -105,7 +105,7 @@ namespace DbPad.ViewModels
                             foreach (var info in firstRoot.MssqlConnections)
                             {
 
-                                Nodes.Add(new Node(info.DisplayName, info.ConnectionString, NodeType.Connection));
+                                Nodes.Add(new Node(info.DisplayName, info.Database, NodeType.Connection, info.ConnectionString));
                             }
                         }
                     }
@@ -131,18 +131,12 @@ namespace DbPad.ViewModels
 
             if (parameter is Node node && node.Type == NodeType.Connection)
             {
-                connectionString = node.Database; // В этом контексте Node.Database хранит строку подключения для NodeType.Connection
+                connectionString = node.ConnectionString;
                 parentConnectionNode = node;
             }
-            // Если сюда попадает MsSqlAdapter.connectionString, это значит, что вызывается команда без выбранного узла
             else if (parameter is string paramString && !string.IsNullOrEmpty(paramString))
             {
                 connectionString = paramString;
-            }
-            else
-            {
-                // Fallback или запрос у пользователя
-                connectionString = MsSqlAdapter.connectionString; // Исходный fallback для примера
             }
 
             if (!string.IsNullOrEmpty(connectionString))
@@ -194,7 +188,8 @@ namespace DbPad.ViewModels
                 TabCaption = $"FROM {selectedNode?.Title}",
                 Query = MsSqlAdapter.Select1000Query(selectedNode?.Title ?? ""),
                 Results = "-- Результаты будут здесь",
-                Database = selectedNode?.Database ?? ""
+                Database = selectedNode?.Database ?? "",
+                ConnectionString= selectedNode?.ConnectionString ?? ""
             });
             SelectedTab = Tabs.LastOrDefault();
             SelectedTab?.ExecuteSQLCommand.Execute(null);

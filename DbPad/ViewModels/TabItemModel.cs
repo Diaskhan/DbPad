@@ -15,11 +15,14 @@ namespace DbPad.ViewModels
         private string _query = "Text1";
         private string _results = "Text2";
         private string _database = "";
+        private string _connectionString = "";
 
         public string TabCaption { get => _tabCaption; set => SetField(ref _tabCaption, value); }
         public string Query { get => _query; set => SetField(ref _query, value); }
         public string Results { get => _results; set => SetField(ref _results, value); }
         public string Database { get => _database; set => SetField(ref _database, value); }
+        public string ConnectionString { get => _connectionString; set => SetField(ref _connectionString, value); }
+
         private ObservableCollection<ExpandoObject> _dbResults = new();
         public ObservableCollection<ExpandoObject> DbResults
         {
@@ -47,7 +50,7 @@ namespace DbPad.ViewModels
         {
             try
             {
-                var result = await MsSqlAdapter.ExecuteSQLAsync(_query, _database);
+                var result = await MsSqlAdapter.ExecuteSQLAsync(_query, _database, _connectionString);
                 if (result != null)
                 {
                     DbResults = result.ToExpandoCollection();

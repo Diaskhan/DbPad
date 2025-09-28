@@ -7,14 +7,13 @@ namespace DbPad.Adapter.MsSql
 {
     public class MsSqlAdapter
     {
-        public static string connectionString = "Server=.\\sqlexpress;Trusted_Connection=True;TrustServerCertificate=True;";
 
-        public static async Task<DataTable?> ExecuteSQLAsync(string query, string database)
+        public static async Task<DataTable?> ExecuteSQLAsync(string query, string database,string connectionString)
         {
             if (string.IsNullOrWhiteSpace(query))
                 return null;
 
-            using (var connection = new SqlConnection(MsSqlAdapter.connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
                 await connection.OpenAsync();
                 if (!string.IsNullOrWhiteSpace(database))
@@ -53,7 +52,7 @@ namespace DbPad.Adapter.MsSql
                     while (await reader.ReadAsync())
                     {
                         var dbName = reader.GetString(0);
-                        databases.Add(new Node(dbName, dbName, new ObservableCollection<Node>(), NodeType.Database));
+                        databases.Add(new Node(dbName, dbName, new ObservableCollection<Node>(), connectionString, NodeType.Database));
                     }
                 }
 
@@ -67,7 +66,7 @@ namespace DbPad.Adapter.MsSql
                     {
                         while (await reader.ReadAsync())
                         {
-                            db.SubNodes?.Add(new Node(reader.GetString(0), db.Database, NodeType.Table));
+                            db.SubNodes?.Add(new Node(reader.GetString(0), db.Database, NodeType.Table, connectionString));
                         }
                     }
                 }

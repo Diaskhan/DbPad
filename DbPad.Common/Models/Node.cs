@@ -13,6 +13,7 @@ namespace DbPad.Common.Models
 
         public string Title { get; }
         public string Database { get; }
+        public string ConnectionString { get; }
         public NodeType Type { get; }
 
         public string IconSource => GetIconSource();
@@ -31,17 +32,19 @@ namespace DbPad.Common.Models
             }
         }
 
-        public Node(string title, string database, NodeType type)
+        public Node(string title, string database, NodeType type, string connectionString)
         {
             Title = title;
             Database = database;
             Type = type;
+            ConnectionString = connectionString;
         }
 
-        public Node(string title, string database, ObservableCollection<Node> subNodes, NodeType type = NodeType.Other)
+        public Node(string title, string database, ObservableCollection<Node> subNodes, string connectionString, NodeType type = NodeType.Other)
         {
             Title = title;
             Database = database;
+            ConnectionString = connectionString;
             SubNodes = subNodes; // Используем свойство, чтобы вызвать OnPropertyChanged при инициализации
             Type = type;
         }
