@@ -31,9 +31,6 @@
     <Content Include="Assets\database.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\sql.connection.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\table.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
