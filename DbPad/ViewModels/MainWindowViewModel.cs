@@ -15,7 +15,8 @@ namespace DbPad.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public ObservableCollection<Node> Nodes { get; set; } = new();
+        public ObservableCollection<Node> Nodes { get; set; } = [];
+        public Node? SelectedNode { get; set; }
         public ObservableCollection<TabItemModel> Tabs { get; } = new ObservableCollection<TabItemModel>(new[]
         {
             new QueryTabModel { TabCaption="Tab1",Query="Select * from top1",}
@@ -31,6 +32,7 @@ namespace DbPad.ViewModels
 
         public ICommand NewQueryCommand { get; }
         public RelayCommand AddConnectionCommand { get; }
+        public RelayCommand RemoveConnectionCommand { get; }
         public RelayCommand RemoveTabCommand { get; }
 
         public ICommand ConnectCommand { get; }
@@ -44,10 +46,11 @@ namespace DbPad.ViewModels
 
         public MainWindowViewModel()
         {
-            Tabs = new ObservableCollection<TabItemModel>();
+            Tabs = [];
 
             NewQueryCommand = new RelayCommand(NewQuery);
             AddConnectionCommand = new RelayCommand(AddConnection);
+            RemoveConnectionCommand = new RelayCommand(RemoveConnection);
 
             Select1000Command = new RelayCommand(Select1000);
             EditDataCommand = new RelayCommand(EditData);
@@ -55,8 +58,17 @@ namespace DbPad.ViewModels
             RemoveTabCommand = new RelayCommand((parameter) => RemoveTab(parameter as TabItemModel));
             ConnectCommand = new RelayCommand(async (parameter) => await ConnectAsync(parameter));
 
-            // Вызов метода для загрузки подключений при запуске
             LoadConnectionsOnStartup();
+        }
+        private void RemoveConnection(object? parameter)
+        {
+            if (SelectedNode?.Type == NodeType.Connection)
+            {
+                if (Nodes.Contains(SelectedNode))
+                {
+                    Nodes.Remove(SelectedNode);
+                }
+            }
         }
 
         private void RemoveTab(TabItemModel? tab)
@@ -66,7 +78,6 @@ namespace DbPad.ViewModels
                 var tabIndex = Tabs.IndexOf(tab);
                 Tabs.Remove(tab);
 
-                // If the removed tab was selected, select a new one
                 if (SelectedTab == tab)
                 {
                     if (Tabs.Any())
@@ -75,8 +86,7 @@ namespace DbPad.ViewModels
                     }
                     else
                     {
-                        // No tabs left, maybe add a new one or set SelectedTab to null
-                        SelectedTab = null!; // Or Tabs.Add(new TabItemModel());
+                        SelectedTab = null!;
                     }
                 }
             }
@@ -84,7 +94,6 @@ namespace DbPad.ViewModels
 
         private void LoadConnectionsOnStartup()
         {
-            // Путь к файлу connections.json в директории запуска приложения
             string filePath = Path.Combine(AppContext.BaseDirectory, "connections.json");
 
             if (File.Exists(filePath))
@@ -113,17 +122,18 @@ namespace DbPad.ViewModels
             }
         }
 
-
         private void NewQuery(object? parameter)
         {
             Tabs.Add(new QueryTabModel());
+            SelectedTab = Tabs.LastOrDefault();
         }
 
         private void AddConnection(object? parameter)
         {
+            Tabs.Add(new ConnectionTabModel());
+            SelectedTab = Tabs.LastOrDefault();
         }
 
-        // Обновлен для работы с узлами подключения
         private async Task ConnectToDbAsync(object? parameter)
         {
             string? connectionString = null;
@@ -154,13 +164,10 @@ namespace DbPad.ViewModels
             }
         }
 
-        // Новая команда для обработки двойного клика по узлу
         private async Task ConnectAsync(object? parameter)
         {
             if (parameter is Node node && node.Type == NodeType.Connection)
             {
-                // Вызываем существующий метод AddConnectionAsync, который загружает базы данных и таблицы
-                // для указанного узла подключения.
                 await ConnectToDbAsync(node);
                 System.Diagnostics.Debug.WriteLine($"Подключение к базе данных: {node.Title}");
             }

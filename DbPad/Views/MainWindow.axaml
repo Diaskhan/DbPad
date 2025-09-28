@@ -28,13 +28,13 @@
 			<Border HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="Gray" BorderThickness="">
 				<WrapPanel  MinHeight="50">
 					<Button Content="+ Connection" Margin="5,0,0,0" Command="{Binding AddConnectionCommand}"/>
-					<Button Content="- Connection" Margin="5,0,0,0"/>
+					<Button Content="- Connection" Margin="5,0,0,0" Command="{Binding RemoveConnectionCommand}"/>
 					<Button Content="Edit Connection" Margin="5,0,0,0"/>
 					<Button Content="New Query" Margin="5,0,0,0" Command="{Binding NewQueryCommand}"/>
 				</WrapPanel>
 			</Border>
 
-			<TreeView Grid.Row="1" ItemsSource="{Binding Nodes}">
+			<TreeView Grid.Row="1" ItemsSource="{Binding Nodes}" SelectedItem="{Binding SelectedNode}">
 				<TreeView.ItemTemplate>
 					<TreeDataTemplate ItemsSource="{Binding SubNodes}">
 						<!-- Указываем DataType для TreeDataTemplate -->

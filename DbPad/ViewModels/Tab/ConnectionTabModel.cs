@@ -21,7 +21,7 @@ namespace DbPad.ViewModels.Tab
 
         public ConnectionTabModel()
         {
-            TabCaption = "Connection Tab";
+            TabCaption = "New connection";
             TestConnectionCommand = new RelayCommand((parameter) => TestConnection());
         }
 
