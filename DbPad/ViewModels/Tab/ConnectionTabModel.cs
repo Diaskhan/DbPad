@@ -1,3 +1,5 @@
+using DbPad.Common.Models;
+using Microsoft.Data.SqlClient; // Ensure this is the correct namespace, as it often is for the newer lib
 using System;
 using System.Windows.Input;
 
@@ -18,17 +20,77 @@ namespace DbPad.ViewModels.Tab
         public string ConnectionStatus { get => _connectionStatus; set => SetField(ref _connectionStatus, value); }
 
         public ICommand TestConnectionCommand { get; }
+        public ICommand SaveConnectionCommand { get; }
+        // Event to notify the ViewModel that a connection has been saved
+        public event Action<Node>? ConnectionSaved;
 
         public ConnectionTabModel()
         {
             TabCaption = "New connection";
             TestConnectionCommand = new RelayCommand((parameter) => TestConnection());
+            SaveConnectionCommand = new RelayCommand((parameter) => SaveConnection()); // Add CanSaveConnection logic as needed
         }
 
         private void TestConnection()
         {
-            ConnectionStatus = "Connection tested at " + DateTime.Now.ToString();
-            // Placeholder for actual connection test logic
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.DataSource = Server;
+            builder.InitialCatalog = Database;
+
+            if (!string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password))
+            {
+                builder.UserID = Username;
+                builder.Password = Password;
+            }
+            else
+            {
+                // Use integrated security if username/password are empty
+                builder.IntegratedSecurity = true;
+                builder.TrustServerCertificate = true; // Often needed for trusted connections
+            }
+
+            string connectionString = builder.ConnectionString;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    ConnectionStatus = $"Connected to {Database} on {Server} at {DateTime.Now.ToString()}";
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                ConnectionStatus = $"Connection failed: {ex.Message} at {DateTime.Now.ToString()}";
+            }
+        }
+
+        private void SaveConnection()
+        {
+            //ArgumentException.ThrowIfNullOrWhiteSpace(Server);
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.DataSource = Server;
+            builder.InitialCatalog = Database;
+
+            if (!string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password))
+            {
+                builder.UserID = Username;
+                builder.Password = Password;
+            }
+            else
+            {
+                // Use integrated security if username/password are empty
+                builder.IntegratedSecurity = true;
+                builder.TrustServerCertificate = true; // Often needed for trusted connections
+            }
+
+            string connectionString = builder.ConnectionString;
+            var newConnectionNode = new Node(Server, Database, NodeType.Connection, connectionString);
+            ConnectionSaved?.Invoke(newConnectionNode);
+
+            Console.WriteLine($"Connection saved: {newConnectionNode.Title}");
+            // In a real application, you would add this node to your connection tree management.
         }
     }
 }

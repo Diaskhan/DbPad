@@ -8,6 +8,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,5">
@@ -19,6 +20,7 @@
             <TextBox Text="{Binding Password, Mode=TwoWay}" Watermark="Password" Width="200" Margin="5"/>
         </StackPanel>
         <Button Grid.Row="2" Content="Test Connection" Command="{Binding TestConnectionCommand}" Margin="5"/>
-        <TextBlock Grid.Row="3" Text="{Binding ConnectionStatus, Mode=TwoWay}" Margin="5"/>
+        <Button Grid.Row="3" Content="Save Connection" Command="{Binding SaveConnectionCommand}" Margin="5"/>
+        <TextBlock Grid.Row="4" Text="{Binding ConnectionStatus, Mode=TwoWay}" Margin="5"/>
     </Grid>
 </UserControl>
