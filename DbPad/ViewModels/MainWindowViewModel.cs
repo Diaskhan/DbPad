@@ -33,10 +33,10 @@ namespace DbPad.ViewModels
         public RelayCommand AddConnectionCommand { get; }
         public RelayCommand RemoveTabCommand { get; }
 
-        public ICommand ConnectCommand { get; } // <-- Добавлена новая команда ConnectCommand
+        public ICommand ConnectCommand { get; }
 
 
-        #region КОМАНДЫ ДЛЯ КОНТЕКСТНОГО МЕНЮ
+        #region Context menu for tables
         public ICommand Select1000Command { get; set; }
         public ICommand EditDataCommand { get; set; }
         public ICommand DesignTableCommand { get; set; }
