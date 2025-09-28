@@ -18,7 +18,7 @@ namespace DbPad.ViewModels
         public ObservableCollection<Node> Nodes { get; set; } = new();
         public ObservableCollection<TabItemModel> Tabs { get; } = new ObservableCollection<TabItemModel>(new[]
         {
-            new TabItemModel { TabCaption="Tab1",Query="Select * from top1",}
+            new QueryTabModel { TabCaption="Tab1",Query="Select * from top1",}
         });
 
         private TabItemModel? _selectedTab;
@@ -120,7 +120,9 @@ namespace DbPad.ViewModels
 
         private void AddTab(object? parameter)
         {
-            Tabs.Add(new TabItemModel());
+            Tabs.Add(new QueryTabModel());
+
+            Tabs.Add(new ConnectionTabModel());
         }
 
         // Обновлен для работы с узлами подключения
@@ -183,7 +185,7 @@ namespace DbPad.ViewModels
         private void Select1000(object? parameter)
         {
             Node? selectedNode = parameter as Node;
-            Tabs.Add(new TabItemModel
+            Tabs.Add(new QueryTabModel
             {
                 TabCaption = $"FROM {selectedNode?.Title}",
                 Query = MsSqlAdapter.Select1000Query(selectedNode?.Title ?? ""),
@@ -192,7 +194,7 @@ namespace DbPad.ViewModels
                 ConnectionString= selectedNode?.ConnectionString ?? ""
             });
             SelectedTab = Tabs.LastOrDefault();
-            SelectedTab?.ExecuteSQLCommand.Execute(null);
+            (SelectedTab as QueryTabModel).ExecuteSQLCommand.Execute(null);
 
         }
 

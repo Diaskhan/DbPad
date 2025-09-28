@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            x:Class="DbPad.Views.EditTableTabView"
+            x:DataType="vm:EditTableTabModel"
+            xmlns:vm="using:DbPad.ViewModels"
+            xmlns:extension="clr-namespace:DbPad.Extensions">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,5">
+            <Button Content="Save Changes" Command="{Binding SaveTableChangesCommand}"/>
+            <Button Content="Refresh" Command="{Binding RefreshTableCommand}" Margin="5,0,0,0"/>
+        </StackPanel>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding TableData}" CanUserSortColumns="True" CanUserResizeColumns="True" extension:DataGridColumnHelper.DeriveExpandoColumns="True"/>
+        <TextBlock Grid.Row="2" Text="{Binding StatusMessage, Mode=TwoWay}" Margin="5"/>
+    </Grid>
+</UserControl>

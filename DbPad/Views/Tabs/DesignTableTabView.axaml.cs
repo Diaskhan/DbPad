@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace DbPad.Views
 {
-    public partial class TabControlView : UserControl
+    public partial class DesignTableTabView : UserControl
     {
-        public TabControlView()
+        public DesignTableTabView()
         {
             InitializeComponent();
         }
