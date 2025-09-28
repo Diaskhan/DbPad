@@ -180,7 +180,7 @@ namespace DbPad.ViewModels
             }
         }
 
-        private void Select1000(object parameter)
+        private void Select1000(object? parameter)
         {
             Node? selectedNode = parameter as Node;
             Tabs.Add(new TabItemModel
@@ -196,12 +196,12 @@ namespace DbPad.ViewModels
 
         }
 
-        private void EditData(object parameter)
+        private void EditData(object? parameter)
         {
 
         }
 
-        private void DesignTable(object parameter)
+        private void DesignTable(object? parameter)
         {
         }
     }
