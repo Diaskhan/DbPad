@@ -2,7 +2,7 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             x:Class="DbPad.Views.EditTableTabView"
             x:DataType="vm:EditTableTabModel"
-            xmlns:vm="using:DbPad.ViewModels"
+            xmlns:vm="using:DbPad.ViewModels.Tab"
             xmlns:extension="clr-namespace:DbPad.Extensions">
     <Grid>
         <Grid.RowDefinitions>

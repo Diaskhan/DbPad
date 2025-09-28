@@ -30,7 +30,7 @@
 					<Button Content="+ Connection" Margin="5,0,0,0" Command="{Binding AddConnectionCommand}"/>
 					<Button Content="- Connection" Margin="5,0,0,0"/>
 					<Button Content="Edit Connection" Margin="5,0,0,0"/>
-					<Button Content="Add Tab" Margin="5,0,0,0" Command="{Binding AddTabCommand}"/>
+					<Button Content="New Query" Margin="5,0,0,0" Command="{Binding NewQueryCommand}"/>
 				</WrapPanel>
 			</Border>
 

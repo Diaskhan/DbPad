@@ -1,6 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:vm="using:DbPad.ViewModels"
+			xmlns:vmtab="using:DbPad.ViewModels.Tab"
             x:Class="DbPad.Views.TabControlView"
             x:DataType="vm:MainWindowViewModel"
             xmlns:extension="clr-namespace:DbPad.Extensions"
@@ -36,16 +37,16 @@
 		</TabControl.ItemTemplate>
 
 		<TabControl.DataTemplates>
-			<DataTemplate DataType="vm:QueryTabModel">
+			<DataTemplate DataType="vmtab:QueryTabModel">
 				<views:QueryTabView />
 			</DataTemplate>
-			<DataTemplate DataType="vm:EditTableTabModel">
+			<DataTemplate DataType="vmtab:EditTableTabModel">
 				<views:EditTableTabView />
 			</DataTemplate>
-			<DataTemplate DataType="vm:DesignTableTabModel">
+			<DataTemplate DataType="vmtab:DesignTableTabModel">
 				<views:DesignTableTabView />
 			</DataTemplate>
-			<DataTemplate DataType="vm:ConnectionTabModel">
+			<DataTemplate DataType="vmtab:ConnectionTabModel">
 				<views:ConnectionTabView />
 			</DataTemplate>
 		</TabControl.DataTemplates>
@@ -54,6 +55,6 @@
 			<DataTemplate>
 				<ContentControl Content="{Binding}" />
 			</DataTemplate>
-		</TabControl.ContentTemplate>	
+		</TabControl.ContentTemplate>
 	</TabControl>
 </UserControl>

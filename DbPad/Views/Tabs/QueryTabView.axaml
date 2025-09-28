@@ -1,25 +1,25 @@
 <UserControl xmlns="https://github.com/avaloniaui"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:vm="using:DbPad.ViewModels.Tab"
             x:Class="DbPad.Views.QueryTabView"
             x:DataType="vm:QueryTabModel"
-            xmlns:vm="using:DbPad.ViewModels"
             xmlns:extension="clr-namespace:DbPad.Extensions">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,0">
-            <Button Content="Run Query" Command="{Binding ExecuteSQLCommand}"/>
-        </StackPanel>
-        <TextBox Grid.Row="1"
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,0">
+			<Button Content="Run Query" Command="{Binding ExecuteSQLCommand}"/>
+		</StackPanel>
+		<TextBox Grid.Row="1"
                  MinHeight="300"
                  Text="{Binding Query, Mode=TwoWay}"
                  AcceptsReturn="True"
                  VerticalContentAlignment="Top"/>
-        <TextBox Grid.Row="2" Text="{Binding Results, Mode=TwoWay}" Watermark="Query Results"/>
-        <DataGrid Grid.Row="3" ItemsSource="{Binding DbResults}" extension:DataGridColumnHelper.DeriveExpandoColumns="True"/>
-    </Grid>
+		<TextBox Grid.Row="2" Text="{Binding Results, Mode=TwoWay}" Watermark="Query Results"/>
+		<DataGrid Grid.Row="3" ItemsSource="{Binding DbResults}" extension:DataGridColumnHelper.DeriveExpandoColumns="True"/>
+	</Grid>
 </UserControl>

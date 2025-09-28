@@ -8,7 +8,7 @@ namespace DbPad.Adapter.MsSql
     public class MsSqlAdapter
     {
 
-        public static async Task<DataTable?> ExecuteSQLAsync(string query, string database,string connectionString)
+        public static async Task<DataTable?> ExecuteSQLAsync(string query, string database, string connectionString)
         {
             if (string.IsNullOrWhiteSpace(query))
                 return null;

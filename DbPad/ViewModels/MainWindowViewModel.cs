@@ -1,6 +1,6 @@
 ﻿using DbPad.Adapter.MsSql;
 using DbPad.Common.Models;
-using DynamicData;
+using DbPad.ViewModels.Tab;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ namespace DbPad.ViewModels
         }
 
 
-        public ICommand AddTabCommand { get; }
+        public ICommand NewQueryCommand { get; }
         public RelayCommand AddConnectionCommand { get; }
         public RelayCommand RemoveTabCommand { get; }
 
@@ -46,18 +46,15 @@ namespace DbPad.ViewModels
         {
             Tabs = new ObservableCollection<TabItemModel>();
 
-            AddTabCommand = new RelayCommand(AddTab);
-            // Эта команда теперь будет обрабатывать параметр, представляющий узел подключения
-            AddConnectionCommand = new RelayCommand(async (parameter) => await AddConnectionAsync(parameter));
+            NewQueryCommand = new RelayCommand(NewQuery);
+            AddConnectionCommand = new RelayCommand(AddConnection);
 
             Select1000Command = new RelayCommand(Select1000);
             EditDataCommand = new RelayCommand(EditData);
             DesignTableCommand = new RelayCommand(DesignTable);
             RemoveTabCommand = new RelayCommand((parameter) => RemoveTab(parameter as TabItemModel));
-
-            // Инициализация новой команды ConnectCommand
             ConnectCommand = new RelayCommand(async (parameter) => await ConnectAsync(parameter));
-            
+
             // Вызов метода для загрузки подключений при запуске
             LoadConnectionsOnStartup();
         }
@@ -85,7 +82,6 @@ namespace DbPad.ViewModels
             }
         }
 
-        // Метод для загрузки подключений из файла
         private void LoadConnectionsOnStartup()
         {
             // Путь к файлу connections.json в директории запуска приложения
@@ -93,22 +89,22 @@ namespace DbPad.ViewModels
 
             if (File.Exists(filePath))
             {
-     
-                    string jsonString = File.ReadAllText(filePath);
-                    var rootList = JsonSerializer.Deserialize<List<ConnectionFileRoot>>(jsonString);
 
-                    if (rootList != null && rootList.Any())
+                string jsonString = File.ReadAllText(filePath);
+                var rootList = JsonSerializer.Deserialize<List<ConnectionFileRoot>>(jsonString);
+
+                if (rootList != null && rootList.Any())
+                {
+                    var firstRoot = rootList.First();
+                    if (firstRoot?.MssqlConnections != null)
                     {
-                        var firstRoot = rootList.First();
-                        if (firstRoot?.MssqlConnections != null)
+                        foreach (var info in firstRoot.MssqlConnections)
                         {
-                            foreach (var info in firstRoot.MssqlConnections)
-                            {
 
-                                Nodes.Add(new Node(info.DisplayName, info.Database, NodeType.Connection, info.ConnectionString));
-                            }
+                            Nodes.Add(new Node(info.DisplayName, info.Database, NodeType.Connection, info.ConnectionString));
                         }
                     }
+                }
 
             }
             else
@@ -118,15 +114,17 @@ namespace DbPad.ViewModels
         }
 
 
-        private void AddTab(object? parameter)
+        private void NewQuery(object? parameter)
         {
             Tabs.Add(new QueryTabModel());
+        }
 
-            Tabs.Add(new ConnectionTabModel());
+        private void AddConnection(object? parameter)
+        {
         }
 
         // Обновлен для работы с узлами подключения
-        private async Task AddConnectionAsync(object? parameter)
+        private async Task ConnectToDbAsync(object? parameter)
         {
             string? connectionString = null;
             Node? parentConnectionNode = null;
@@ -147,17 +145,7 @@ namespace DbPad.ViewModels
 
                 if (parentConnectionNode != null)
                 {
-                    // Очищаем существующие под-узлы и добавляем новые, если узел уже существует
-                    // Вместо AddRange, присваиваем новую ObservableCollection.
-                    // Свойство SubNodes в классе Node теперь имеет сеттер, который уведомляет UI об изменении.
                     parentConnectionNode.SubNodes = new ObservableCollection<Node>(nodes);
-                }
-                else
-                {
-                    //// Если узел родительского подключения не определен, возможно, вы хотите добавить его как новый корневой элемент
-                    //// или обновить существующий, если это нежелательное поведение, его можно изменить
-                    //Nodes.Clear(); // Рассмотрите, всегда ли это очистка желательна, возможно, вы хотите добавить к определенному родителю.
-                    //Nodes.AddRange(nodes);
                 }
             }
             else
@@ -173,7 +161,7 @@ namespace DbPad.ViewModels
             {
                 // Вызываем существующий метод AddConnectionAsync, который загружает базы данных и таблицы
                 // для указанного узла подключения.
-                await AddConnectionAsync(node);
+                await ConnectToDbAsync(node);
                 System.Diagnostics.Debug.WriteLine($"Подключение к базе данных: {node.Title}");
             }
             else
@@ -191,10 +179,10 @@ namespace DbPad.ViewModels
                 Query = MsSqlAdapter.Select1000Query(selectedNode?.Title ?? ""),
                 Results = "-- Результаты будут здесь",
                 Database = selectedNode?.Database ?? "",
-                ConnectionString= selectedNode?.ConnectionString ?? ""
+                ConnectionString = selectedNode?.ConnectionString ?? ""
             });
             SelectedTab = Tabs.LastOrDefault();
-            (SelectedTab as QueryTabModel).ExecuteSQLCommand.Execute(null);
+            (SelectedTab as QueryTabModel)?.ExecuteSQLCommand.Execute(null);
 
         }
 
