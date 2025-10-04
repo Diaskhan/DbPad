@@ -3,7 +3,11 @@
             xmlns:vm="using:DbPad.ViewModels.Tab"
             x:Class="DbPad.Views.QueryTabView"
             x:DataType="vm:QueryTabModel"
-            xmlns:extension="clr-namespace:DbPad.Extensions">
+            xmlns:extension="clr-namespace:DbPad.Extensions"
+			xmlns:AvaloniaEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
+			xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+			xmlns:behaviors="clr-namespace:DbPad.Extensions"
+>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
@@ -14,11 +18,20 @@
 		<StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,0">
 			<Button Content="Run Query" Command="{Binding ExecuteSQLCommand}"/>
 		</StackPanel>
-		<TextBox Grid.Row="1"
+		<!--<TextBox Grid.Row="1"
                  MinHeight="300"
                  Text="{Binding Query, Mode=TwoWay}"
                  AcceptsReturn="True"
-                 VerticalContentAlignment="Top"/>
+                 VerticalContentAlignment="Top"/>-->
+		<AvaloniaEdit:TextEditor
+			Grid.Row="1"
+			MinHeight="300"           
+			ShowLineNumbers="True"
+			FontFamily="Cascadia Code,Consolas,Menlo,Monospace">
+			<i:Interaction.Behaviors>
+				<behaviors:DocumentTextBindingBehavior Text="{Binding Query, Mode=TwoWay}"/>
+			</i:Interaction.Behaviors>
+		</AvaloniaEdit:TextEditor>
 		<TextBox Grid.Row="2" Text="{Binding Results, Mode=TwoWay}" Watermark="Query Results"/>
 		<DataGrid Grid.Row="3" ItemsSource="{Binding DbResults}" extension:DataGridColumnHelper.DeriveExpandoColumns="True"/>
 	</Grid>
