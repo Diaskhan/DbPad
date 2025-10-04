@@ -19,6 +19,7 @@
 			<Button Content="Run Query" Command="{Binding ExecuteSQLCommand}"/>
 		</StackPanel>
 		<AvaloniaEdit:TextEditor
+			x:Name="textEditor"
 			Grid.Row="1"
 			MinHeight="300"           
 			ShowLineNumbers="True">

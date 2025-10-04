@@ -16,13 +16,14 @@
 		<semi:DataGridSemiTheme />
 		<StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
 	</Application.Styles>
-	
+
 
 
 	<Application.Resources>
 		<extension:StringToImageConverter x:Key="StringToImageConverter" />
 		<x:Double x:Key="ControlContentThemeFontSize">12</x:Double>
 		<FontFamily x:Key="ContentControlThemeFontFamily">Microsoft YaHei</FontFamily>
+		<Thickness x:Key="ToolTipBorderThemeThickness">1</Thickness>
 	</Application.Resources>
 
 </Application>
