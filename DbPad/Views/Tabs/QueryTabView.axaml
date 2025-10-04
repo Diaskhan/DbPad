@@ -21,8 +21,7 @@
 		<AvaloniaEdit:TextEditor
 			Grid.Row="1"
 			MinHeight="300"           
-			ShowLineNumbers="True"
-			FontFamily="Cascadia Code,Consolas,Menlo,Monospace">
+			ShowLineNumbers="True">
 			<i:Interaction.Behaviors>
 				<behaviors:DocumentTextBindingBehavior Text="{Binding Query, Mode=TwoWay}"/>
 			</i:Interaction.Behaviors>
